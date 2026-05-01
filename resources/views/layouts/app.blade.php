@@ -110,6 +110,13 @@
 
             <p class="text-center footer-copy mb-0">
                 &copy; {{ date('Y') }} SM-Autos. All Rights Reserved.
+                <span class="mx-2">·</span>
+                <a href="{{ route('admin.login') }}"
+                    style="color:rgba(255,255,255,0.2); text-decoration:none; font-size:0.75rem"
+                    onmouseover="this.style.color='rgba(255,255,255,0.6)'"
+                    onmouseout="this.style.color='rgba(255,255,255,0.2)'">
+                    Admin
+                </a>
             </p>
         </div>
     </footer>

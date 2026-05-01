@@ -4,6 +4,8 @@
     </IfModule>
 
     RewriteEngine On
+    # CRITICAL: Tell Apache we are in a subfolder
+    RewriteBase /smart-cms/
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine On
+   
+   # If the request is for the root folder, send it to public
+   RewriteRule ^$ public/index.php [L]
+   
+   # If the request is for any other path (like /login), send it to public
+   RewriteCond %{REQUEST_URI} !^/public/
+   RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
