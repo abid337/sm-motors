@@ -10,6 +10,7 @@ use App\Models\Media;
 use App\Models\ItemProperty;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ItemController extends Controller
 {
@@ -38,11 +39,14 @@ class ItemController extends Controller
             'thumbnail'   => 'nullable|image|max:2048',
         ]);
 
-        // Thumbnail Upload
+        // Thumbnail Upload to Cloudinary
         $thumbnailPath = null;
         if ($request->hasFile('thumbnail')) {
-            $thumbnailPath = $request->file('thumbnail')
-                ->store('thumbnails', 'public');
+            $uploaded = Cloudinary::upload(
+                $request->file('thumbnail')->getRealPath(),
+                ['folder' => 'thumbnails']
+            );
+            $thumbnailPath = $uploaded->getSecurePath();
         }
 
         $item = Item::create([
@@ -72,12 +76,16 @@ class ItemController extends Controller
             }
         }
 
-        // Extra Images
+        // Extra Images Upload to Cloudinary
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
+                $uploaded = Cloudinary::upload(
+                    $image->getRealPath(),
+                    ['folder' => 'items']
+                );
                 Media::create([
                     'item_id'   => $item->id,
-                    'file_path' => $image->store('items', 'public'),
+                    'file_path' => $uploaded->getSecurePath(),
                     'type'      => 'image',
                 ]);
             }
@@ -103,10 +111,14 @@ class ItemController extends Controller
             'category_id' => 'required|exists:categories,id',
         ]);
 
+        // Thumbnail Update on Cloudinary
         $thumbnailPath = $item->thumbnail;
         if ($request->hasFile('thumbnail')) {
-            $thumbnailPath = $request->file('thumbnail')
-                ->store('thumbnails', 'public');
+            $uploaded = Cloudinary::upload(
+                $request->file('thumbnail')->getRealPath(),
+                ['folder' => 'thumbnails']
+            );
+            $thumbnailPath = $uploaded->getSecurePath();
         }
 
         $item->update([
