@@ -28,7 +28,7 @@
                 {{-- Main Image --}}
                 <div class="detail-img-wrap mb-3">
                     @if($item->thumbnail)
-                        <img src="{{ asset('storage/' . $item->thumbnail) }}"
+                        <img src="{{ $item->thumbnail }}"
                              alt="{{ $item->title }}"
                              class="img-fluid rounded-3 w-100"
                              id="main-image"
@@ -52,23 +52,23 @@
 
                     {{-- Thumbnail as first --}}
                     @if($hasThumb)
-                    <img src="{{ asset('storage/' . $item->thumbnail) }}"
+                    <img src="{{ $item->thumbnail }}"
                          class="gallery-thumb"
                          style="width:85px; height:65px; object-fit:cover; cursor:pointer;
                                 border-radius:8px; border:2px solid #e63946;
                                 transition: all 0.2s"
-                         onclick="changeImage(this, '{{ asset('storage/' . $item->thumbnail) }}')"
+                         onclick="changeImage(this, '{{ $item->thumbnail }}')"
                          alt="thumbnail"/>
                     @endif
 
                     {{-- Extra Images --}}
                     @foreach($item->media as $media)
-                    <img src="{{ asset('storage/' . $media->file_path) }}"
+                    <img src="{{ $media->file_path }}"
                          class="gallery-thumb"
                          style="width:85px; height:65px; object-fit:cover; cursor:pointer;
                                 border-radius:8px; border:2px solid transparent;
                                 transition: all 0.2s"
-                         onclick="changeImage(this, '{{ asset('storage/' . $media->file_path) }}')"
+                         onclick="changeImage(this, '{{ $media->file_path }}')"
                          alt="image {{ $loop->iteration }}"/>
                     @endforeach
 

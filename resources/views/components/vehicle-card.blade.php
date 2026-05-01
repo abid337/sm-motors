@@ -4,7 +4,7 @@
             {{-- Image --}}
             <div class="vehicle-img-wrap">
                 @if($item->thumbnail)
-                    <img src="{{ asset('storage/' . $item->thumbnail) }}"
+                    <img src="{{ $item->thumbnail }}"
                          alt="{{ $item->title }}"
                          class="vehicle-img"/>
                 @else
