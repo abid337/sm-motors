@@ -177,4 +177,10 @@ class ItemController extends Controller
         return redirect()->route('admin.items.index')
             ->with('success', 'Item deleted!');
     }
+    public function deleteMedia($id)
+    {
+        $media = Media::findOrFail($id);
+        $media->delete();
+        return back()->with('success', 'Image deleted!');
+    }
 }

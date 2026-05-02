@@ -95,6 +95,37 @@
                 @endforeach
             </div>
         </div>
+
+        {{-- Gallery Images --}}
+        <div class="admin-card mb-4">
+            <h6 class="fw-bold text-white mb-4">Gallery Images</h6>
+
+            {{-- Existing Images --}}
+            @if($item->media && $item->media->count() > 0)
+                <div class="row g-2 mb-3">
+                    @foreach($item->media as $media)
+                    <div class="col-4 position-relative" id="media-{{ $media->id }}">
+                        <img src="{{ $media->file_path }}"
+                             class="img-fluid rounded-2"
+                             style="height:100px; width:100%; object-fit:cover;"/>
+                        <a href="{{ route('admin.items.media.delete', $media->id) }}"
+                           class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
+                           onclick="return confirm('Delete this image?')"
+                           style="padding: 2px 6px;">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    </div>
+                    @endforeach
+                </div>
+            @else
+                <p class="text-muted mb-3">No gallery images yet.</p>
+            @endif
+
+            {{-- Upload New Images --}}
+            <label class="form-label text-white">Add More Images</label>
+            <input type="file" name="images[]" class="form-control" accept="image/*" multiple/>
+            <small class="text-muted">You can select multiple images</small>
+        </div>
     </div>
 
     <div class="col-lg-4">
@@ -117,7 +148,7 @@
         <div class="admin-card mb-4">
             <h6 class="fw-bold text-white mb-3">Thumbnail</h6>
             @if($item->thumbnail)
-                <img src="{{ asset('storage/' . $item->thumbnail) }}"
+                <img src="{{ $item->thumbnail }}"
                      class="img-fluid rounded-2 mb-3" style="max-height:150px"/>
             @endif
             <input type="file" name="thumbnail" class="form-control" accept="image/*"/>
