@@ -6,7 +6,7 @@
 @section('content')
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <p class="text-muted-brand mb-0">Total: {{ $items->total() }} items</p>
+    <p class="text-white-brand mb-0">Total: {{ $items->total() }} items</p>
     <a href="{{ route('admin.items.create') }}" class="btn btn-danger">
         <i class="fas fa-plus me-2"></i> Add New Item
     </a>
@@ -29,14 +29,14 @@
         <tbody>
             @forelse($items as $item)
             <tr>
-                <td class="text-muted">{{ $item->id }}</td>
+                <td class="text-white">{{ $item->id }}</td>
                 <td>
                     @if($item->thumbnail)
                         <img src="{{ $item->thumbnail }}"
                              style="width:50px;height:40px;object-fit:cover;border-radius:6px"/>
                     @else
                         <div style="width:50px;height:40px;background:#242424;border-radius:6px;display:flex;align-items:center;justify-content:center">
-                            <i class="fas fa-car text-muted"></i>
+                            <i class="fas fa-car text-white"></i>
                         </div>
                     @endif
                 </td>
@@ -46,8 +46,8 @@
                         <span class="badge bg-danger ms-1" style="font-size:0.65rem">Featured</span>
                     @endif
                 </td>
-                <td class="text-muted">{{ $item->category->name ?? '-' }}</td>
-                <td class="text-muted">{{ $item->city->name ?? '-' }}</td>
+                <td class="text-white">{{ $item->category->name ?? '-' }}</td>
+                <td class="text-white">{{ $item->city->name ?? '-' }}</td>
                 <td>Rs. {{ number_format($item->price) }}</td>
                 <td>
                     <span class="badge {{ $item->status === 'published' ? 'badge-published' : 'badge-draft' }}">
@@ -77,7 +77,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="8" class="text-center py-5 text-muted">
+                <td colspan="8" class="text-center py-5 text-white">
                     No items found. <a href="{{ route('admin.items.create') }}" class="text-danger">Add first item</a>
                 </td>
             </tr>

@@ -21,7 +21,7 @@
         <tbody>
             @forelse($inquiries as $inquiry)
             <tr>
-                <td class="text-muted">{{ $inquiry->id }}</td>
+                <td class="text-white">{{ $inquiry->id }}</td>
                 <td><strong>{{ $inquiry->name }}</strong></td>
                 <td>
                     <a href="tel:{{ $inquiry->phone }}" class="text-white text-decoration-none">
@@ -34,7 +34,7 @@
                             {{ $inquiry->email }}
                         </a>
                     @else
-                        <span class="text-muted">-</span>
+                        <span class="text-white">-</span>
                     @endif
                 </td>
                <td style="color:rgba(255,255,255,0.85)">{{ Str::limit($inquiry->message ?? '-', 35) }}</td>
@@ -45,10 +45,10 @@
                             {{ Str::limit($inquiry->item->title, 20) }}
                         </a>
                     @else
-                        <span class="text-muted">-</span>
+                        <span class="text-white">-</span>
                     @endif
                 </td>
-                <td class="text-muted">
+                <td class="text-white">
                     <div>{{ $inquiry->created_at->format('d M Y') }}</div>
                     <small style="color:rgba(255,255,255,0.3)">
                         {{ $inquiry->created_at->format('h:i A') }}
@@ -66,7 +66,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="8" class="text-center py-4 text-muted">No inquiries yet</td>
+                <td colspan="8" class="text-center py-4 text-white">No inquiries yet</td>
             </tr>
             @endforelse
         </tbody>

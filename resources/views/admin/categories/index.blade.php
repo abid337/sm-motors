@@ -24,13 +24,13 @@
         <tbody>
             @forelse($categories as $cat)
             <tr>
-                <td class="text-muted">{{ $cat->id }}</td>
+                <td class="text-white">{{ $cat->id }}</td>
                 <td><strong>{{ $cat->name }}</strong></td>
                 <td>
                     @if($cat->icon)
                         <i class="{{ $cat->icon }}"></i>
                     @else
-                        <span class="text-muted">-</span>
+                        <span class="text-white">-</span>
                     @endif
                 </td>
                 <td>{{ $cat->items_count }}</td>
@@ -52,7 +52,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="5" class="text-center py-4 text-muted">No categories yet</td>
+                <td colspan="5" class="text-center py-4 text-white">No categories yet</td>
             </tr>
             @endforelse
         </tbody>

@@ -18,7 +18,7 @@
         <tbody>
             @forelse($cities as $city)
             <tr>
-                <td class="text-muted">{{ $city->id }}</td>
+                <td class="text-white">{{ $city->id }}</td>
                 <td><strong>{{ $city->name }}</strong></td>
                 <td>{{ $city->items_count }}</td>
                 <td>
@@ -39,7 +39,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="4" class="text-center py-4 text-muted">No cities yet</td>
+                <td colspan="4" class="text-center py-4 text-white">No cities yet</td>
             </tr>
             @endforelse
         </tbody>

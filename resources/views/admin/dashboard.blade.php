@@ -80,7 +80,7 @@
                                 {{ Str::limit($item->title, 30) }}
                             </a>
                         </td>
-                        <td class="text-muted">{{ $item->category->name ?? '-' }}</td>
+                        <td class="text-white">{{ $item->category->name ?? '-' }}</td>
                         <td>Rs. {{ number_format($item->price) }}</td>
                         <td>
                             <span class="badge {{ $item->status === 'published' ? 'badge-published' : 'badge-draft' }}">
@@ -90,7 +90,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="text-center text-muted py-4">No items yet</td>
+                        <td colspan="4" class="text-center text-white py-4">No items yet</td>
                     </tr>
                     @endforelse
                 </tbody>
@@ -122,10 +122,10 @@
                         <td>{{ $inquiry->name }}</td>
                         <td>{{ $inquiry->phone }}</td>
                         <td style="color:rgba(255,255,255,0.85)">{{ Str::limit($inquiry->message ?? '-', 20) }}</td>
-                        <td class="text-muted">
+                        <td class="text-white">
                             {{ Str::limit($inquiry->item->title ?? '-', 15) }}
                         </td>
-                        <td class="text-muted" style="font-size:0.8rem">
+                        <td class="text-white" style="font-size:0.8rem">
                             {{ $inquiry->created_at->format('d M Y') }}<br>
                             <span style="color:rgba(255,255,255,0.3)">
                                 {{ $inquiry->created_at->format('h:i A') }}
@@ -134,7 +134,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5" class="text-center text-muted py-4">No inquiries yet</td>
+                        <td colspan="5" class="text-center text-white py-4">No inquiries yet</td>
                     </tr>
                     @endforelse
                 </tbody>
