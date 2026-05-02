@@ -8,10 +8,9 @@ use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\InquiryController;
-use App\Http\Controllers\User\AuthController;
-use App\Http\Controllers\User\ItemController as UserItemController;
 use App\Http\Controllers\Admin\UserController;
-
+use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\UserItemController;
 
 // ─────────────────────────────
 // FRONTEND ROUTES
@@ -45,10 +44,6 @@ Route::prefix('dashboard')
         Route::delete('/items/{item}', [UserItemController::class, 'destroy'])->name('items.destroy');
         Route::delete('/items/media/{media}', [UserItemController::class, 'deleteMedia'])->name('items.media.delete');
     });
-
-// Users
-Route::get('users', [UserController::class, 'index'])->name('users.index');
-Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 // ─────────────────────────────
 // ADMIN AUTH ROUTES
@@ -84,4 +79,8 @@ Route::prefix('admin')
         // Inquiries
         Route::get('inquiries', [InquiryController::class, 'index'])->name('inquiries.index');
         Route::delete('inquiries/{id}', [InquiryController::class, 'destroy'])->name('inquiries.destroy');
+
+        // Users
+        Route::get('users', [UserController::class, 'index'])->name('users.index');
+        Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     });

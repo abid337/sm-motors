@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 use Cloudinary\Cloudinary;
 use Cloudinary\Configuration\Configuration;
 
-class ItemController extends Controller
+class UserItemController extends Controller
 {
     private function getCloudinary()
     {
