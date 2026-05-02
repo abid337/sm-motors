@@ -104,16 +104,22 @@
             @if($item->media && $item->media->count() > 0)
                 <div class="row g-2 mb-3">
                     @foreach($item->media as $media)
-                    <div class="col-4 position-relative" id="media-{{ $media->id }}">
+                    <div class="col-4 position-relative">
                         <img src="{{ $media->file_path }}"
                              class="img-fluid rounded-2"
                              style="height:100px; width:100%; object-fit:cover;"/>
-                        <a href="{{ route('admin.items.media.delete', $media->id) }}"
-                           class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
-                           onclick="return confirm('Delete this image?')"
-                           style="padding: 2px 6px;">
-                            <i class="fas fa-times"></i>
-                        </a>
+                        <form action="{{ route('admin.items.media.delete', $media->id) }}"
+                              method="POST"
+                              style="position:absolute; top:0; right:0; margin:4px">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Delete this image?')"
+                                    style="padding: 2px 6px;">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </form>
                     </div>
                     @endforeach
                 </div>

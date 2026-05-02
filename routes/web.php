@@ -40,7 +40,7 @@ Route::prefix('admin')
 
         // Items
         Route::resource('items', ItemController::class);
-        Route::delete('/admin/items/media/{media}', [ItemController::class, 'deleteMedia'])->name('admin.items.media.delete');
+        Route::delete('items/media/{media}', [ItemController::class, 'deleteMedia'])->name('items.media.delete');
 
         // Categories
         Route::resource('categories', CategoryController::class);
