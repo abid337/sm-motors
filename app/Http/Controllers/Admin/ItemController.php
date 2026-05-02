@@ -10,10 +10,26 @@ use App\Models\Media;
 use App\Models\ItemProperty;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Cloudinary\Cloudinary;
+use Cloudinary\Configuration\Configuration;
 
 class ItemController extends Controller
 {
+    private function getCloudinary()
+    {
+        Configuration::instance([
+            'cloud' => [
+                'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                'api_key'    => env('CLOUDINARY_API_KEY'),
+                'api_secret' => env('CLOUDINARY_API_SECRET'),
+            ],
+            'url' => [
+                'secure' => true,
+            ]
+        ]);
+        return new Cloudinary();
+    }
+
     public function index()
     {
         $items = Item::with('category', 'city')
@@ -42,11 +58,12 @@ class ItemController extends Controller
         // Thumbnail Upload to Cloudinary
         $thumbnailPath = null;
         if ($request->hasFile('thumbnail')) {
-            $uploaded = Cloudinary::upload(
+            $cloudinary = $this->getCloudinary();
+            $result = $cloudinary->uploadApi()->upload(
                 $request->file('thumbnail')->getRealPath(),
                 ['folder' => 'thumbnails']
             );
-            $thumbnailPath = $uploaded->getSecurePath();
+            $thumbnailPath = $result['secure_url'];
         }
 
         $item = Item::create([
@@ -78,14 +95,15 @@ class ItemController extends Controller
 
         // Extra Images Upload to Cloudinary
         if ($request->hasFile('images')) {
+            $cloudinary = $this->getCloudinary();
             foreach ($request->file('images') as $image) {
-                $uploaded = Cloudinary::upload(
+                $result = $cloudinary->uploadApi()->upload(
                     $image->getRealPath(),
                     ['folder' => 'items']
                 );
                 Media::create([
                     'item_id'   => $item->id,
-                    'file_path' => $uploaded->getSecurePath(),
+                    'file_path' => $result['secure_url'],
                     'type'      => 'image',
                 ]);
             }
@@ -114,11 +132,12 @@ class ItemController extends Controller
         // Thumbnail Update on Cloudinary
         $thumbnailPath = $item->thumbnail;
         if ($request->hasFile('thumbnail')) {
-            $uploaded = Cloudinary::upload(
+            $cloudinary = $this->getCloudinary();
+            $result = $cloudinary->uploadApi()->upload(
                 $request->file('thumbnail')->getRealPath(),
                 ['folder' => 'thumbnails']
             );
-            $thumbnailPath = $uploaded->getSecurePath();
+            $thumbnailPath = $result['secure_url'];
         }
 
         $item->update([
