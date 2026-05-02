@@ -32,7 +32,7 @@
                 <td class="text-muted">{{ $item->id }}</td>
                 <td>
                     @if($item->thumbnail)
-                        <img src="{{ asset('storage/' . $item->thumbnail) }}"
+                        <img src="{{ $item->thumbnail }}"
                              style="width:50px;height:40px;object-fit:cover;border-radius:6px"/>
                     @else
                         <div style="width:50px;height:40px;background:#242424;border-radius:6px;display:flex;align-items:center;justify-content:center">
