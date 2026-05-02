@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\InquiryController;
+use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\ItemController as UserItemController;
 
 // ─────────────────────────────
 // FRONTEND ROUTES
@@ -18,7 +20,32 @@ Route::get('/item/{slug}', [FrontItemController::class, 'show'])->name('items.sh
 Route::post('/inquiry', [FrontItemController::class, 'inquiry'])->name('items.inquiry');
 
 // ─────────────────────────────
-// AUTH ROUTES
+// USER AUTH ROUTES
+// ─────────────────────────────
+Route::get('/register', [AuthController::class, 'registerForm'])->name('user.register');
+Route::post('/register', [AuthController::class, 'register'])->name('user.register.post');
+Route::get('/login', [AuthController::class, 'loginForm'])->name('user.login');
+Route::post('/login', [AuthController::class, 'login'])->name('user.login.post');
+Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
+
+// ─────────────────────────────
+// USER DASHBOARD ROUTES (Protected)
+// ─────────────────────────────
+Route::prefix('dashboard')
+    ->middleware(['auth'])
+    ->name('user.')
+    ->group(function () {
+        Route::get('/', [UserItemController::class, 'dashboard'])->name('dashboard');
+        Route::get('/items/create', [UserItemController::class, 'create'])->name('items.create');
+        Route::post('/items', [UserItemController::class, 'store'])->name('items.store');
+        Route::get('/items/{item}/edit', [UserItemController::class, 'edit'])->name('items.edit');
+        Route::put('/items/{item}', [UserItemController::class, 'update'])->name('items.update');
+        Route::delete('/items/{item}', [UserItemController::class, 'destroy'])->name('items.destroy');
+        Route::delete('/items/media/{media}', [UserItemController::class, 'deleteMedia'])->name('items.media.delete');
+    });
+
+// ─────────────────────────────
+// ADMIN AUTH ROUTES
 // ─────────────────────────────
 Route::get('/admin/login', function () {
     return view('admin.auth.login');
