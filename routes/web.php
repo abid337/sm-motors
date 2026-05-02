@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\InquiryController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\ItemController as UserItemController;
+use App\Http\Controllers\Admin\UserController;
+
 
 // ─────────────────────────────
 // FRONTEND ROUTES
@@ -43,6 +45,10 @@ Route::prefix('dashboard')
         Route::delete('/items/{item}', [UserItemController::class, 'destroy'])->name('items.destroy');
         Route::delete('/items/media/{media}', [UserItemController::class, 'deleteMedia'])->name('items.media.delete');
     });
+
+// Users
+Route::get('users', [UserController::class, 'index'])->name('users.index');
+Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 // ─────────────────────────────
 // ADMIN AUTH ROUTES

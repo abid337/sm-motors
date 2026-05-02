@@ -232,6 +232,10 @@
            class="admin-nav-item {{ request()->routeIs('admin.inquiries.*') ? 'active' : '' }}">
             <i class="fas fa-envelope"></i> Inquiries
         </a>
+        <a href="{{ route('admin.users.index') }}"
+           class="admin-nav-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+            <i class="fas fa-users"></i> Users
+        </a>
 
         <div class="admin-nav-label mt-2">Account</div>
         <a href="{{ route('home') }}" class="admin-nav-item" target="_blank">
