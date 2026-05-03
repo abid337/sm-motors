@@ -258,7 +258,7 @@
     <div class="admin-topbar">
         <h1 class="page-title mb-0">@yield('page-title', 'Dashboard')</h1>
         <div class="d-flex align-items-center gap-3">
-            <span class="text-muted-brand small">
+            <span class="text-white-brand small">
                 <i class="fas fa-user-circle me-1 text-red"></i>
                 {{ auth()->user()->name }}
             </span>

@@ -142,12 +142,12 @@
                                 @endforeach
                             </div>
                         @else
-                            <p class="text-muted mb-3">No gallery images yet.</p>
+                            <p class="text-white mb-3">No gallery images yet.</p>
                         @endif
 
                         <label class="form-label text-white">Add More Images</label>
                         <input type="file" name="images[]" class="form-control" accept="image/*" multiple/>
-                        <small class="text-muted">You can select multiple images</small>
+                        <small class="text-white">You can select multiple images</small>
                     </div>
                 </div>
 
@@ -162,7 +162,7 @@
                                  class="img-fluid rounded-2 mb-3" style="max-height:150px"/>
                         @endif
                         <input type="file" name="thumbnail" class="form-control" accept="image/*"/>
-                        <small class="text-muted">Leave empty to keep current</small>
+                        <small class="text-white">Leave empty to keep current</small>
                     </div>
                 </div>
 

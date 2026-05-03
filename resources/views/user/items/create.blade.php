@@ -14,11 +14,11 @@
     <h4 class="fw-bold mb-4">Add New Vehicle</h4>
 
     @if($errors->any())
-        <div class="alert alert-danger">
-            @foreach($errors->all() as $error)
-                <div>{{ $error }}</div>
-            @endforeach
-        </div>
+    <div class="alert alert-danger">
+        @foreach($errors->all() as $error)
+        <div>{{ $error }}</div>
+        @endforeach
+    </div>
     @endif
 
     <form action="{{ route('user.items.store') }}" method="POST" enctype="multipart/form-data">
@@ -34,22 +34,22 @@
                         <div class="mb-3">
                             <label class="form-label">Title *</label>
                             <input type="text" name="title" class="form-control"
-                                   value="{{ old('title') }}" placeholder="e.g. Honda CD 70 2024" required/>
+                                value="{{ old('title') }}" placeholder="e.g. Honda CD 70 2024" required />
                         </div>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label">Price (Rs.) *</label>
                                 <input type="number" name="price" class="form-control"
-                                       value="{{ old('price') }}" required/>
+                                    value="{{ old('price') }}" placeholder="e.g. 150000" required />
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Category *</label>
                                 <select name="category_id" class="form-select" required>
                                     <option value="">Select Category</option>
                                     @foreach($categories as $cat)
-                                        <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>
-                                            {{ $cat->name }}
-                                        </option>
+                                    <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>
+                                        {{ $cat->name }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -58,9 +58,9 @@
                                 <select name="city_id" class="form-select">
                                     <option value="">Select City</option>
                                     @foreach($cities as $city)
-                                        <option value="{{ $city->id }}" {{ old('city_id') == $city->id ? 'selected' : '' }}>
-                                            {{ $city->name }}
-                                        </option>
+                                    <option value="{{ $city->id }}" {{ old('city_id') == $city->id ? 'selected' : '' }}>
+                                        {{ $city->name }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -75,7 +75,7 @@
                         <div class="mt-3">
                             <label class="form-label">Description</label>
                             <textarea name="description" class="form-control"
-                                      rows="4" placeholder="Describe your vehicle...">{{ old('description') }}</textarea>
+                                rows="4" placeholder="Describe your vehicle...">{{ old('description') }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -92,10 +92,10 @@
                         <div id="properties-container">
                             <div class="row g-2 mb-2 prop-row">
                                 <div class="col-5">
-                                    <input type="text" name="prop_keys[]" class="form-control" placeholder="e.g. Mileage"/>
+                                    <input type="text" name="prop_keys[]" class="form-control" placeholder="e.g. Mileage" />
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" name="prop_values[]" class="form-control" placeholder="e.g. 5000 km"/>
+                                    <input type="text" name="prop_values[]" class="form-control" placeholder="e.g. 5000 km" />
                                 </div>
                                 <div class="col-1">
                                     <button type="button" class="btn btn-outline-danger remove-prop w-100">
@@ -111,8 +111,8 @@
                 <div class="card bg-dark border-0 shadow mb-4">
                     <div class="card-body p-4">
                         <h6 class="fw-bold text-white mb-4">Gallery Images</h6>
-                        <input type="file" name="images[]" class="form-control" accept="image/*" multiple/>
-                        <small class="text-muted">You can select multiple images</small>
+                        <input type="file" name="images[]" class="form-control" accept="image/*" multiple />
+                        <small class="text-white">You can select multiple images</small>
                     </div>
                 </div>
 
@@ -122,8 +122,8 @@
                 <div class="card bg-dark border-0 shadow mb-4">
                     <div class="card-body p-4">
                         <h6 class="fw-bold text-white mb-3">Main Photo</h6>
-                        <input type="file" name="thumbnail" class="form-control" accept="image/*"/>
-                        <small class="text-muted">Main display image</small>
+                        <input type="file" name="thumbnail" class="form-control" accept="image/*" />
+                        <small class="text-white">Main display image</small>
                     </div>
                 </div>
 
@@ -139,11 +139,11 @@
 
 @push('scripts')
 <script>
-document.getElementById('add-prop').addEventListener('click', function() {
-    const container = document.getElementById('properties-container');
-    const row = document.createElement('div');
-    row.className = 'row g-2 mb-2 prop-row';
-    row.innerHTML = `
+    document.getElementById('add-prop').addEventListener('click', function() {
+        const container = document.getElementById('properties-container');
+        const row = document.createElement('div');
+        row.className = 'row g-2 mb-2 prop-row';
+        row.innerHTML = `
         <div class="col-5">
             <input type="text" name="prop_keys[]" class="form-control" placeholder="Key"/>
         </div>
@@ -156,13 +156,13 @@ document.getElementById('add-prop').addEventListener('click', function() {
             </button>
         </div>
     `;
-    container.appendChild(row);
-});
+        container.appendChild(row);
+    });
 
-document.addEventListener('click', function(e) {
-    if (e.target.closest('.remove-prop')) {
-        e.target.closest('.prop-row').remove();
-    }
-});
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.remove-prop')) {
+            e.target.closest('.prop-row').remove();
+        }
+    });
 </script>
 @endpush

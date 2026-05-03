@@ -9,7 +9,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h4 class="fw-bold mb-0">My Dashboard</h4>
-            <p class="text-muted mb-0">Welcome, {{ auth()->user()->name }}!</p>
+            <p class="text-white mb-0">Welcome, {{ auth()->user()->name }}!</p>
         </div>
         <div class="d-flex gap-2">
             <a href="{{ route('user.items.create') }}" class="btn btn-danger">
@@ -51,7 +51,7 @@
                                      style="width:50px;height:40px;object-fit:cover;border-radius:6px"/>
                             @else
                                 <div style="width:50px;height:40px;background:#242424;border-radius:6px;display:flex;align-items:center;justify-content:center">
-                                    <i class="fas fa-car text-muted"></i>
+                                    <i class="fas fa-car text-white"></i>
                                 </div>
                             @endif
                         </td>
@@ -86,7 +86,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="text-center py-5 text-muted">
+                        <td colspan="6" class="text-center py-5 text-white">
                             No items yet.
                             <a href="{{ route('user.items.create') }}" class="text-danger">Add your first vehicle!</a>
                         </td>

@@ -6,7 +6,7 @@
 @section('content')
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <p class="text-muted-brand mb-0">Total: {{ $users->total() }} users</p>
+    <p class="text-white mb-0">Total: {{ $users->total() }} users</p>
 </div>
 
 @if(session('success'))
@@ -33,7 +33,7 @@
         <tbody>
             @forelse($users as $user)
             <tr>
-                <td class="text-muted">{{ $user->id }}</td>
+                <td class="text-white">{{ $user->id }}</td>
                 <td><strong>{{ $user->name }}</strong></td>
                 <td class="text-white">{{ $user->email }}</td>
                 <td>
@@ -42,7 +42,7 @@
                     </span>
                 </td>
                 <td class="text-white">{{ $user->items_count }}</td>
-                <td class="text-muted">{{ $user->created_at->format('d M Y') }}</td>
+                <td class="text-white">{{ $user->created_at->format('d M Y') }}</td>
                 <td>
                     @if(!$user->isAdmin())
                     <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
@@ -53,13 +53,13 @@
                         </button>
                     </form>
                     @else
-                    <span class="text-muted">—</span>
+                    <span class="text-white">—</span>
                     @endif
                 </td>
             </tr>
             @empty
             <tr>
-                <td colspan="7" class="text-center py-5 text-muted">No users found.</td>
+                <td colspan="7" class="text-center py-5 text-white">No users found.</td>
             </tr>
             @endforelse
         </tbody>

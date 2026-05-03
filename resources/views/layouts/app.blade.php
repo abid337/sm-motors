@@ -26,7 +26,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
                         <a class="nav-link fw-medium" href="{{ route('items.search', ['category' => 'new-bikes']) }}">New Bikes</a>
                     </li>
@@ -39,6 +39,55 @@
                     <li class="nav-item">
                         <a class="nav-link fw-medium" href="{{ route('items.search', ['category' => 'used-cars']) }}">Used Cars</a>
                     </li>
+
+                    {{-- Post Your Ad Button --}}
+                    <li class="nav-item ms-3">
+                        @auth
+                        <a href="{{ route('user.items.create') }}"
+                            class="btn btn-danger fw-bold px-4">
+                            <i class="fas fa-plus me-1"></i> Post Your Ad
+                        </a>
+                        @else
+                        <a href="{{ route('user.login') }}"
+                            class="btn btn-danger fw-bold px-4">
+                            <i class="fas fa-plus me-1"></i> Post Your Ad
+                        </a>
+                        @endauth
+                    </li>
+
+                    {{-- User Menu --}}
+                    @auth
+                    <li class="nav-item ms-2 dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center gap-1"
+                            href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle fs-5"></i>
+                            {{ auth()->user()->name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" style="background:#1a1a1a; border:1px solid rgba(255,255,255,0.1)">
+                            <li>
+                                <a class="dropdown-item text-white" href="{{ route('user.dashboard') }}">
+                                    <i class="fas fa-th-large me-2 text-danger"></i> My Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-white" href="{{ route('user.items.create') }}">
+                                    <i class="fas fa-plus me-2 text-danger"></i> Add Vehicle
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider" style="border-color:rgba(255,255,255,0.1)">
+                            </li>
+                            <li>
+                                <form action="{{ route('user.logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item text-white">
+                                        <i class="fas fa-sign-out-alt me-2 text-danger"></i> Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    @endauth
                 </ul>
             </div>
         </div>
@@ -60,7 +109,7 @@
                         </div>
                         SM-Autos
                     </a>
-                    <p class="text-muted-brand">
+                    <p class="text-white-brand">
                         Pakistan's #1 platform for buying and selling vehicles. Find your dream car or bike today!
                     </p>
                 </div>
@@ -69,15 +118,15 @@
                 <div class="col-lg-3 col-md-6">
                     <h5 class="mb-4">Contact Us</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-3 d-flex align-items-center gap-2 text-muted-brand">
+                        <li class="mb-3 d-flex align-items-center gap-2 text-white-brand">
                             <i class="fas fa-phone-alt" style="color:#e63946; width:16px"></i>
                             +92 309 6527842
                         </li>
-                        <li class="mb-3 d-flex align-items-center gap-2 text-muted-brand">
+                        <li class="mb-3 d-flex align-items-center gap-2 text-white-brand">
                             <i class="fas fa-envelope" style="color:#e63946; width:16px"></i>
                             abid6527842@gmail.com
                         </li>
-                        <li class="mb-3 d-flex align-items-center gap-2 text-muted-brand">
+                        <li class="mb-3 d-flex align-items-center gap-2 text-white-brand">
                             <i class="fas fa-map-marker-alt" style="color:#e63946; width:16px"></i>
                             Lahore, Punjab, Pakistan
                         </li>
@@ -120,6 +169,7 @@
             </p>
         </div>
     </footer>
+
     {{-- WHATSAPP BUTTON --}}
     <a href="https://wa.me/923096527842" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
         <i class="fab fa-whatsapp"></i>
