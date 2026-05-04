@@ -9,7 +9,7 @@ class Item extends Model
     protected $fillable = [
         'title', 'slug', 'description', 'price',
         'thumbnail', 'status', 'condition',
-        'featured', 'category_id', 'city_id', 'user_id'
+        'featured', 'category_id', 'city_id', 'user_id', 'views'
     ];
 
     // Category
@@ -52,5 +52,17 @@ class Item extends Model
     public function inquiries()
     {
         return $this->hasMany(Inquiry::class);
+    }
+
+    // Reports
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
+    // Increment Views
+    public function incrementViews()
+    {
+        $this->increment('views');
     }
 }

@@ -39,8 +39,8 @@ class ItemController extends Controller
             });
         }
 
-        $items  = $query->latest()->paginate(12);
-        $cities = City::all();
+        $items      = $query->latest()->paginate(12);
+        $cities     = City::all();
         $categories = Category::all();
 
         return view('frontend.search', compact('items', 'cities', 'categories'));
@@ -53,6 +53,9 @@ class ItemController extends Controller
             ->where('status', 'published')
             ->firstOrFail();
 
+        // Increment Views
+        $item->incrementViews();
+
         $related = Item::with('city')
             ->where('category_id', $item->category_id)
             ->where('id', '!=', $item->id)
@@ -64,23 +67,23 @@ class ItemController extends Controller
     }
 
     public function inquiry(Request $request)
-{
-    $validated = $request->validate([
-        'name'    => 'required|string|max:255',
-        'phone'   => 'required|string|max:20',
-        'email'   => 'nullable|email|max:255',
-        'message' => 'nullable|string|max:1000',
-        'item_id' => 'required|exists:items,id',
-    ]);
+    {
+        $validated = $request->validate([
+            'name'    => 'required|string|max:255',
+            'phone'   => 'required|string|max:20',
+            'email'   => 'nullable|email|max:255',
+            'message' => 'nullable|string|max:1000',
+            'item_id' => 'required|exists:items,id',
+        ]);
 
-    Inquiry::create([
-        'item_id' => $validated['item_id'],
-        'name'    => $validated['name'],
-        'phone'   => $validated['phone'],
-        'email'   => $validated['email'] ?? null,
-        'message' => $validated['message'] ?? null,
-    ]);
+        Inquiry::create([
+            'item_id' => $validated['item_id'],
+            'name'    => $validated['name'],
+            'phone'   => $validated['phone'],
+            'email'   => $validated['email'] ?? null,
+            'message' => $validated['message'] ?? null,
+        ]);
 
-    return back()->with('success', 'Inquiry sent successfully!');
-}
+        return back()->with('success', 'Inquiry sent successfully!');
+    }
 }

@@ -3,12 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ItemController as FrontItemController;
+use App\Http\Controllers\Frontend\ReportController as FrontReportController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\InquiryController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\UserItemController;
 
@@ -19,6 +21,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/search', [FrontItemController::class, 'search'])->name('items.search');
 Route::get('/item/{slug}', [FrontItemController::class, 'show'])->name('items.show');
 Route::post('/inquiry', [FrontItemController::class, 'inquiry'])->name('items.inquiry');
+Route::post('/report', [FrontReportController::class, 'store'])->name('items.report');
 
 // ─────────────────────────────
 // USER AUTH ROUTES
@@ -83,4 +86,11 @@ Route::prefix('admin')
         // Users
         Route::get('users', [UserController::class, 'index'])->name('users.index');
         Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+        // Reports
+        Route::get('reports', [AdminReportController::class, 'index'])->name('reports.index');
+        Route::patch('reports/{report}/reviewed', [AdminReportController::class, 'reviewed'])->name('reports.reviewed');
+        Route::patch('reports/{report}/resolved', [AdminReportController::class, 'resolved'])->name('reports.resolved');
+        Route::delete('reports/{report}/item', [AdminReportController::class, 'deleteItem'])->name('reports.delete-item');
+        Route::delete('reports/{report}', [AdminReportController::class, 'destroy'])->name('reports.destroy');
     });

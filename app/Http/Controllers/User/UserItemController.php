@@ -28,14 +28,21 @@ class UserItemController extends Controller
         return new Cloudinary();
     }
 
-    // User Dashboard 
+    // User Dashboard
     public function dashboard()
     {
         $items = Item::where('user_id', auth()->id())
             ->with('category', 'city')
+            ->withCount('inquiries')
             ->latest()
             ->paginate(10);
-        return view('user.dashboard', compact('items'));
+
+        // Total Stats
+        $totalViews     = Item::where('user_id', auth()->id())->sum('views');
+        $totalInquiries = Item::where('user_id', auth()->id())->withCount('inquiries')->get()->sum('inquiries_count');
+        $totalItems     = Item::where('user_id', auth()->id())->count();
+
+        return view('user.dashboard', compact('items', 'totalViews', 'totalInquiries', 'totalItems'));
     }
 
     // Create Form
@@ -81,7 +88,6 @@ class UserItemController extends Controller
             'user_id'     => auth()->id(),
         ]);
 
-        // Properties
         if ($request->has('prop_keys')) {
             foreach ($request->prop_keys as $i => $key) {
                 if (!empty($key)) {
@@ -94,7 +100,6 @@ class UserItemController extends Controller
             }
         }
 
-        // Extra Images
         if ($request->hasFile('images')) {
             $cloudinary = $this->getCloudinary();
             foreach ($request->file('images') as $image) {
@@ -117,7 +122,6 @@ class UserItemController extends Controller
     // Edit Form
     public function edit(Item $item)
     {
-
         if ($item->user_id !== auth()->id()) {
             abort(403);
         }
@@ -174,7 +178,6 @@ class UserItemController extends Controller
             }
         }
 
-        // Extra Images
         if ($request->hasFile('images')) {
             $cloudinary = $this->getCloudinary();
             foreach ($request->file('images') as $image) {
