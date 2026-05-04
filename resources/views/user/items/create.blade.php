@@ -146,26 +146,65 @@
 
 @push('scripts')
 <script>
+    // Auto load properties when category changes
+    document.querySelector('select[name="category_id"]').addEventListener('change', function() {
+        const categoryId = this.value;
+        const container = document.getElementById('properties-container');
+        container.innerHTML = '';
+
+        if (!categoryId) return;
+
+        fetch(`/api/property-templates/${categoryId}`)
+            .then(res => res.json())
+            .then(templates => {
+                if (templates.length === 0) return;
+
+                templates.forEach(t => {
+                    const row = document.createElement('div');
+                    row.className = 'row g-2 mb-2 prop-row';
+                    row.innerHTML = `
+                        <div class="col-5">
+                            <input type="text" name="prop_keys[]" class="form-control"
+                                   value="${t.label}" readonly style="opacity:0.7"/>
+                        </div>
+                        <div class="col-6">
+                            <input type="text" name="prop_values[]" class="form-control"
+                                   placeholder="${t.placeholder || 'Enter ' + t.label}"
+                                   ${t.required ? 'required' : ''}/>
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-outline-danger remove-prop w-100">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    `;
+                    container.appendChild(row);
+                });
+            });
+    });
+
+    // Add manual property
     document.getElementById('add-prop').addEventListener('click', function() {
         const container = document.getElementById('properties-container');
         const row = document.createElement('div');
         row.className = 'row g-2 mb-2 prop-row';
         row.innerHTML = `
-        <div class="col-5">
-            <input type="text" name="prop_keys[]" class="form-control" placeholder="Key"/>
-        </div>
-        <div class="col-6">
-            <input type="text" name="prop_values[]" class="form-control" placeholder="Value"/>
-        </div>
-        <div class="col-1">
-            <button type="button" class="btn btn-outline-danger remove-prop w-100">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    `;
+            <div class="col-5">
+                <input type="text" name="prop_keys[]" class="form-control" placeholder="Key"/>
+            </div>
+            <div class="col-6">
+                <input type="text" name="prop_values[]" class="form-control" placeholder="Value"/>
+            </div>
+            <div class="col-1">
+                <button type="button" class="btn btn-outline-danger remove-prop w-100">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
         container.appendChild(row);
     });
 
+    // Remove property row
     document.addEventListener('click', function(e) {
         if (e.target.closest('.remove-prop')) {
             e.target.closest('.prop-row').remove();
