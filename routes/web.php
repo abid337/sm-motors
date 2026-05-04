@@ -93,4 +93,4 @@ Route::prefix('admin')
         Route::patch('reports/{report}/resolved', [AdminReportController::class, 'resolved'])->name('reports.resolved');
         Route::delete('reports/{report}/item', [AdminReportController::class, 'deleteItem'])->name('reports.delete-item');
         Route::delete('reports/{report}', [AdminReportController::class, 'destroy'])->name('reports.destroy');
-    })
+    });
