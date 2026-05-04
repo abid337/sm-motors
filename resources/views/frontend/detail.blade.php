@@ -22,8 +22,8 @@
     <div class="container">
         <div class="row g-4">
 
-            {{-- LEFT: Images --}}
-            <div class="col-lg-7">
+            {{-- LEFT: Images + Details --}}
+            <div class="col-lg-8">
 
                 {{-- Main Image --}}
                 <div class="detail-img-wrap mb-3">
@@ -48,13 +48,12 @@
                 @endphp
 
                 @if($hasThumb || $hasMedia)
-                <div class="d-flex gap-2 flex-wrap">
+                <div class="d-flex gap-2 flex-wrap mb-3">
                     @if($hasThumb)
                     <img src="{{ $item->thumbnail }}"
                         class="gallery-thumb"
                         style="width:85px; height:65px; object-fit:cover; cursor:pointer;
-                                border-radius:8px; border:2px solid #e63946;
-                                transition: all 0.2s"
+                                border-radius:8px; border:2px solid #e63946; transition: all 0.2s"
                         onclick="changeImage(this, '{{ $item->thumbnail }}')"
                         alt="thumbnail" />
                     @endif
@@ -63,8 +62,7 @@
                     <img src="{{ $media->file_path }}"
                         class="gallery-thumb"
                         style="width:85px; height:65px; object-fit:cover; cursor:pointer;
-                                border-radius:8px; border:2px solid transparent;
-                                transition: all 0.2s"
+                                border-radius:8px; border:2px solid transparent; transition: all 0.2s"
                         onclick="changeImage(this, '{{ $media->file_path }}')"
                         alt="image {{ $loop->iteration }}" />
                     @endforeach
@@ -72,16 +70,13 @@
                 @endif
 
                 {{-- Views Counter --}}
-                <div class="mt-3">
+                <div class="mb-4">
                     <small class="text-white">
                         <i class="fas fa-eye me-1"></i> {{ number_format($item->views) }} views
                     </small>
                 </div>
 
-            </div>
-
-            {{-- RIGHT: Info --}}
-            <div class="col-lg-5">
+                {{-- ===== CAR DETAILS NEECHE GALLERY KE ===== --}}
                 <div class="detail-info-card card p-4">
 
                     {{-- Badges --}}
@@ -94,12 +89,15 @@
                         @endif
                     </div>
 
+                    {{-- Title --}}
                     <h2 class="fw-bold mb-2">{{ $item->title }}</h2>
 
+                    {{-- Price --}}
                     <div class="detail-price mb-3">
                         Rs. {{ number_format($item->price) }}
                     </div>
 
+                    {{-- Location & Category --}}
                     <div class="d-flex gap-3 mb-4 flex-wrap">
                         @if($item->city)
                         <span class="text-muted-brand">
@@ -129,78 +127,130 @@
 
                     {{-- Description --}}
                     @if($item->description)
-                    <p class="text-white-brand mb-4">{{ $item->description }}</p>
+                    <p class="text-white-brand mb-0">{{ $item->description }}</p>
                     @endif
 
-                    {{-- Success Message --}}
-                    @if(session('success'))
-                    <div class="alert alert-success">
-                        <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                </div>
+            </div>
+
+            {{-- RIGHT: Sticky Seller Info + Inquiry Form --}}
+            <div class="col-lg-4">
+                <div class="sticky-sidebar">
+
+                    {{-- Seller Info Card --}}
+                    <div class="card p-4 mb-3">
+                        <h6 class="fw-bold mb-3 text-white">
+                            <i class="fas fa-user-circle me-2 text-danger"></i>Seller Information
+                        </h6>
+
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-danger text-white rounded-circle d-flex align-items-center 
+                                        justify-content-center me-3 fw-bold"
+                                style="width:48px; height:48px; font-size:18px; flex-shrink:0;">
+                                {{ strtoupper(substr($item->user->name, 0, 1)) }}
+                            </div>
+                            <div>
+                                <p class="mb-0 fw-bold text-white">{{ $item->user->name }}</p>
+                                @if($item->user->city)
+                                <small class="text-muted">{{ $item->user->city }}</small>
+                                @endif
+                            </div>
+                        </div>
+
+                        {{-- Call Button --}}
+                        @if($item->user->phone)
+                        <a href="tel:{{ $item->user->phone }}"
+                            class="btn btn-danger w-100 fw-bold mb-2">
+                            <i class="fas fa-phone me-2"></i> Call Seller
+                        </a>
+                        @endif
+
+                        {{-- WhatsApp Button --}}
+                        @if($item->user->whatsapp)
+                        <a href="https://wa.me/92{{ ltrim($item->user->whatsapp, '0') }}?text=Hi, I'm interested in your listing: {{ $item->title }}"
+                            target="_blank"
+                            class="btn btn-success w-100 fw-bold">
+                            <i class="fab fa-whatsapp me-2"></i> WhatsApp
+                        </a>
+                        @endif
                     </div>
-                    @endif
 
-                    {{-- Errors --}}
-                    @if($errors->any())
-                    <div class="alert alert-danger">
-                        @foreach($errors->all() as $error)
-                        <div><i class="fas fa-exclamation-circle me-1"></i>{{ $error }}</div>
-                        @endforeach
-                    </div>
-                    @endif
+                    {{-- Inquiry Form Card --}}
+                    <div class="card p-4">
+                        <h6 class="fw-bold mb-3 text-white">
+                            <i class="fas fa-envelope me-2 text-danger"></i>Send Inquiry
+                        </h6>
 
-                    {{-- Inquiry Form --}}
-                    <form action="{{ route('items.inquiry') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="item_id" value="{{ $item->id }}" />
-
-                        <div class="mb-3">
-                            <input type="text"
-                                name="name"
-                                class="form-control @error('name') is-invalid @enderror"
-                                placeholder="Your Name *"
-                                value="{{ old('name') }}"
-                                required />
+                        {{-- Success Message --}}
+                        @if(session('success'))
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
                         </div>
+                        @endif
 
-                        <div class="mb-3">
-                            <input type="text"
-                                name="phone"
-                                class="form-control @error('phone') is-invalid @enderror"
-                                placeholder="Phone Number *"
-                                value="{{ old('phone') }}"
-                                required />
+                        {{-- Errors --}}
+                        @if($errors->any())
+                        <div class="alert alert-danger">
+                            @foreach($errors->all() as $error)
+                            <div><i class="fas fa-exclamation-circle me-1"></i>{{ $error }}</div>
+                            @endforeach
                         </div>
+                        @endif
 
-                        <div class="mb-3">
-                            <input type="email"
-                                name="email"
-                                class="form-control @error('email') is-invalid @enderror"
-                                placeholder="Email Address (Optional)"
-                                value="{{ old('email') }}" />
+                        <form action="{{ route('items.inquiry') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="item_id" value="{{ $item->id }}" />
+
+                            <div class="mb-3">
+                                <input type="text"
+                                    name="name"
+                                    class="form-control @error('name') is-invalid @enderror"
+                                    placeholder="Your Name *"
+                                    value="{{ old('name') }}"
+                                    required />
+                            </div>
+
+                            <div class="mb-3">
+                                <input type="text"
+                                    name="phone"
+                                    class="form-control @error('phone') is-invalid @enderror"
+                                    placeholder="Phone Number *"
+                                    value="{{ old('phone') }}"
+                                    required />
+                            </div>
+
+                            <div class="mb-3">
+                                <input type="email"
+                                    name="email"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    placeholder="Email Address (Optional)"
+                                    value="{{ old('email') }}" />
+                            </div>
+
+                            <div class="mb-3">
+                                <textarea name="message"
+                                    class="form-control @error('message') is-invalid @enderror"
+                                    rows="4"
+                                    placeholder="Your Message (Optional)">{{ old('message') }}</textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary-brand w-100 py-2 fw-bold">
+                                <i class="fas fa-paper-plane me-2"></i> Send Inquiry
+                            </button>
+                        </form>
+
+                        {{-- Report Button --}}
+                        <div class="mt-3 text-center">
+                            <button class="btn btn-link text-muted small p-0"
+                                data-bs-toggle="modal" data-bs-target="#reportModal">
+                                <i class="fas fa-flag me-1"></i> Report this listing
+                            </button>
                         </div>
-
-                        <div class="mb-3">
-                            <textarea name="message"
-                                class="form-control @error('message') is-invalid @enderror"
-                                rows="4"
-                                placeholder="Your Message (Optional)">{{ old('message') }}</textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary-brand w-100 py-2 fw-bold">
-                            <i class="fas fa-paper-plane me-2"></i> Send Inquiry
-                        </button>
-                    </form>
-
-                    {{-- Report Button --}}
-                    <div class="mt-3 text-center">
-                        <button class="btn btn-link text-muted small p-0"
-                            data-bs-toggle="modal" data-bs-target="#reportModal">
-                            <i class="fas fa-flag me-1"></i> Report this listing
-                        </button>
                     </div>
 
                 </div>
             </div>
+
         </div>
     </div>
 </main>
@@ -261,7 +311,14 @@
 </div>
 
 @endsection
-
+@push('styles')
+<style>
+    .sticky-sidebar {
+        position: sticky;
+        top: 20px;
+    }
+</style>
+@endpush
 @push('scripts')
 <script>
     function changeImage(clickedThumb, src) {
