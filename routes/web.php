@@ -11,7 +11,6 @@ use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\InquiryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
-use App\Http\Controllers\Admin\PropertyTemplateController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\UserItemController;
 
@@ -23,14 +22,6 @@ Route::get('/search', [FrontItemController::class, 'search'])->name('items.searc
 Route::get('/item/{slug}', [FrontItemController::class, 'show'])->name('items.show');
 Route::post('/inquiry', [FrontItemController::class, 'inquiry'])->name('items.inquiry');
 Route::post('/report', [FrontReportController::class, 'store'])->name('items.report');
-
-// API - Get property templates by category
-Route::get('/api/property-templates/{category}', function ($categoryId) {
-    $templates = \App\Models\PropertyTemplate::where('category_id', $categoryId)
-        ->orderBy('sort_order')
-        ->get();
-    return response()->json($templates);
-})->name('api.property-templates');
 
 // ─────────────────────────────
 // USER AUTH ROUTES
@@ -102,10 +93,4 @@ Route::prefix('admin')
         Route::patch('reports/{report}/resolved', [AdminReportController::class, 'resolved'])->name('reports.resolved');
         Route::delete('reports/{report}/item', [AdminReportController::class, 'deleteItem'])->name('reports.delete-item');
         Route::delete('reports/{report}', [AdminReportController::class, 'destroy'])->name('reports.destroy');
-
-        // Property Templates
-        Route::get('property-templates', [PropertyTemplateController::class, 'index'])->name('property-templates.index');
-        Route::post('property-templates', [PropertyTemplateController::class, 'store'])->name('property-templates.store');
-        Route::put('property-templates/{propertyTemplate}', [PropertyTemplateController::class, 'update'])->name('property-templates.update');
-        Route::delete('property-templates/{propertyTemplate}', [PropertyTemplateController::class, 'destroy'])->name('property-templates.destroy');
-    });
+    })

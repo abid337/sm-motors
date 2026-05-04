@@ -25,10 +25,4 @@ class Category extends Model
     {
         return $this->hasMany(Item::class);
     }
-
-    // Property Templates
-    public function propertyTemplates()
-    {
-        return $this->hasMany(PropertyTemplate::class)->orderBy('sort_order');
-    }
 }
