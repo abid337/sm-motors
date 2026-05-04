@@ -25,6 +25,20 @@
             padding-top: 0;
         }
 
+
+        .admin-sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .admin-sidebar::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .admin-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(230, 57, 70, 0.5);
+            border-radius: 2px;
+        }
+
         .admin-brand {
             padding: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.09);
