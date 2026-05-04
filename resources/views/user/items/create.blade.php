@@ -32,18 +32,18 @@
                     <div class="card-body p-4">
                         <h6 class="fw-bold text-white mb-4">Basic Information</h6>
                         <div class="mb-3">
-                            <label class="form-label">Title *</label>
+                            <label class="form-label text-white">Title *</label>
                             <input type="text" name="title" class="form-control"
                                 value="{{ old('title') }}" placeholder="e.g. Honda CD 70 2024" required />
                         </div>
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label class="form-label">Price (Rs.) *</label>
+                                <label class="form-label text-white">Price (Rs.) *</label>
                                 <input type="number" name="price" class="form-control"
                                     value="{{ old('price') }}" placeholder="e.g. 150000" required />
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Category *</label>
+                                <label class="form-label text-white">Category *</label>
                                 <select name="category_id" class="form-select" required>
                                     <option value="">Select Category</option>
                                     @foreach($categories as $cat)
@@ -54,7 +54,7 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">City</label>
+                                <label class="form-label text-white">City</label>
                                 <select name="city_id" class="form-select">
                                     <option value="">Select City</option>
                                     @foreach($cities as $city)
@@ -65,7 +65,7 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Condition</label>
+                                <label class="form-label text-white">Condition</label>
                                 <select name="condition" class="form-select">
                                     <option value="used">Used</option>
                                     <option value="new">New</option>
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                         <div class="mt-3">
-                            <label class="form-label">Description</label>
+                            <label class="form-label text-white">Description</label>
                             <textarea name="description" class="form-control"
                                 rows="4" placeholder="Describe your vehicle...">{{ old('description') }}</textarea>
                         </div>
@@ -136,6 +136,13 @@
     </form>
 </div>
 @endsection
+@push('styles')
+<style>
+    .form-label {
+        color: #ccc !important;
+    }
+</style>
+@endpush
 
 @push('scripts')
 <script>
