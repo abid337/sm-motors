@@ -301,10 +301,7 @@
                 class="admin-nav-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                 <i class="fas fa-users"></i> Users
             </a>
-            <a href="{{ route('admin.property-templates.index') }}"
-                class="admin-nav-item {{ request()->routeIs('admin.property-templates.*') ? 'active' : '' }}">
-                <i class="fas fa-list-alt"></i> Properties
-            </a>
+
 
             <div class="admin-nav-label mt-2">Account</div>
             <a href="{{ route('home') }}" class="admin-nav-item" target="_blank">
