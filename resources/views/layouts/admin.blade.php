@@ -238,6 +238,10 @@
             background: #242424;
             color: #fff;
         }
+
+        .form-label {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
     </style>
     @stack('styles')
 </head>
@@ -338,8 +342,8 @@
 
     {{-- AUTO DISMISS ALERTS AFTER 3 SECONDS --}}
     <script>
-        setTimeout(function () {
-            document.querySelectorAll('.alert').forEach(function (alert) {
+        setTimeout(function() {
+            document.querySelectorAll('.alert').forEach(function(alert) {
                 var bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
                 bsAlert.close();
             });
