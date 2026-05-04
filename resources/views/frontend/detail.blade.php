@@ -102,7 +102,7 @@
 
                     <div class="d-flex gap-3 mb-4 flex-wrap">
                         @if($item->city)
-                        <span class="text-white">
+                        <span class="text-muted-brand">
                             <i class="fas fa-map-marker-alt text-red me-1"></i>
                             {{ $item->city->name }}
                         </span>
@@ -193,7 +193,7 @@
 
                     {{-- Report Button --}}
                     <div class="mt-3 text-center">
-                        <button class="btn btn-link text-white small p-0"
+                        <button class="btn btn-link text-muted small p-0"
                             data-bs-toggle="modal" data-bs-target="#reportModal">
                             <i class="fas fa-flag me-1"></i> Report this listing
                         </button>
