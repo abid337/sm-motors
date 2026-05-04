@@ -139,18 +139,18 @@
 
                     {{-- Seller Info Card --}}
                     <div class="card p-4 mb-3">
-                        <h6 class="fw-bold mb-3 text-white">
+                        <h6 class="fw-bold mb-3" style="color: #1a1a1a !important">
                             <i class="fas fa-user-circle me-2 text-danger"></i>Seller Information
                         </h6>
 
                         <div class="d-flex align-items-center mb-3">
                             <div class="bg-danger text-white rounded-circle d-flex align-items-center 
-                                        justify-content-center me-3 fw-bold"
+                    justify-content-center me-3 fw-bold"
                                 style="width:48px; height:48px; font-size:18px; flex-shrink:0;">
                                 {{ strtoupper(substr($item->user->name, 0, 1)) }}
                             </div>
                             <div>
-                                <p class="mb-0 fw-bold text-white">{{ $item->user->name }}</p>
+                                <p class="mb-0 fw-bold" style="color: #1a1a1a !important">{{ $item->user->name }}</p>
                                 @if($item->user->city)
                                 <small class="text-muted">{{ $item->user->city }}</small>
                                 @endif
@@ -177,7 +177,7 @@
 
                     {{-- Inquiry Form Card --}}
                     <div class="card p-4">
-                        <h6 class="fw-bold mb-3 text-white">
+                        <h6 class="fw-bold mb-3" style="color: #1a1a1a !important">
                             <i class="fas fa-envelope me-2 text-danger"></i>Send Inquiry
                         </h6>
 

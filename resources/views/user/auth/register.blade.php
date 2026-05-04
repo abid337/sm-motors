@@ -12,32 +12,57 @@
                     <p class="text-white text-center mb-4">Register to list your vehicles</p>
 
                     @if(session('error'))
-                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    <div class="alert alert-danger">{{ session('error') }}</div>
                     @endif
 
                     <form action="{{ route('user.register.post') }}" method="POST">
                         @csrf
+
+                        {{-- Name --}}
                         <div class="mb-3">
                             <label class="form-label">Full Name</label>
                             <input type="text" name="name" class="form-control"
-                                   value="{{ old('name') }}" required/>
+                                value="{{ old('name') }}" required />
                             @error('name')<small class="text-danger">{{ $message }}</small>@enderror
                         </div>
+
+                        {{-- Email --}}
                         <div class="mb-3">
                             <label class="form-label">Email</label>
                             <input type="email" name="email" class="form-control"
-                                   value="{{ old('email') }}" required/>
+                                value="{{ old('email') }}" required />
                             @error('email')<small class="text-danger">{{ $message }}</small>@enderror
                         </div>
+
+                        {{-- Phone --}}
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" name="phone" class="form-control"
+                                value="{{ old('phone') }}" placeholder="03001234567" required />
+                            @error('phone')<small class="text-danger">{{ $message }}</small>@enderror
+                        </div>
+
+                        {{-- WhatsApp --}}
+                        <div class="mb-3">
+                            <label class="form-label">WhatsApp Number <span class="text-muted">(Optional)</span></label>
+                            <input type="text" name="whatsapp" class="form-control"
+                                value="{{ old('whatsapp') }}" placeholder="03001234567" />
+                            @error('whatsapp')<small class="text-danger">{{ $message }}</small>@enderror
+                        </div>
+
+                        {{-- Password --}}
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" required/>
+                            <input type="password" name="password" class="form-control" required />
                             @error('password')<small class="text-danger">{{ $message }}</small>@enderror
                         </div>
+
+                        {{-- Confirm Password --}}
                         <div class="mb-4">
                             <label class="form-label">Confirm Password</label>
-                            <input type="password" name="password_confirmation" class="form-control" required/>
+                            <input type="password" name="password_confirmation" class="form-control" required />
                         </div>
+
                         <button type="submit" class="btn btn-danger w-100 py-2 fw-bold">Register</button>
                     </form>
 

@@ -23,12 +23,16 @@ class AuthController extends Controller
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
+            'phone'    => 'required|string|max:20',
+            'whatsapp' => 'nullable|string|max:20',
         ]);
 
         $user = User::create([
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
+            'phone'    => $request->phone,
+            'whatsapp' => $request->whatsapp,
             'role'     => 'user',
         ]);
 
