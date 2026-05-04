@@ -176,6 +176,17 @@
     </a>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+    {{-- AUTO DISMISS ALERTS AFTER 3 SECONDS --}}
+    <script>
+        setTimeout(function() {
+            document.querySelectorAll('.alert').forEach(function(alert) {
+                var bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                bsAlert.close();
+            });
+        }, 3000);
+    </script>
+
     @stack('scripts')
 </body>
 

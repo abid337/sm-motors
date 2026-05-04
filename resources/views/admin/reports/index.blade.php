@@ -6,7 +6,7 @@
 @section('content')
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <p class="text-muted-brand mb-0">Total: {{ $reports->total() }} reports</p>
+    <p class="text-white-brand mb-0">Total: {{ $reports->total() }} reports</p>
 </div>
 
 @if(session('success'))
@@ -30,7 +30,7 @@
         <tbody>
             @forelse($reports as $report)
             <tr>
-                <td class="text-muted">{{ $report->id }}</td>
+                <td class="text-white">{{ $report->id }}</td>
                 <td>
                     @if($report->item)
                         <a href="{{ route('items.show', $report->item->slug) }}"
@@ -39,14 +39,14 @@
                             {{ Str::limit($report->item->title, 25) }}
                         </a>
                     @else
-                        <span class="text-muted">Deleted</span>
+                        <span class="text-white">Deleted</span>
                     @endif
                 </td>
                 <td class="text-white">{{ $report->user->name ?? 'Guest' }}</td>
                 <td>
                     <span class="badge bg-warning text-dark">{{ $report->reason }}</span>
                 </td>
-                <td class="text-muted">{{ Str::limit($report->description, 30) ?? '—' }}</td>
+                <td class="text-white">{{ Str::limit($report->description, 30) ?? '—' }}</td>
                 <td>
                     @if($report->status === 'pending')
                         <span class="badge bg-danger">Pending</span>
@@ -56,7 +56,7 @@
                         <span class="badge bg-success">Resolved</span>
                     @endif
                 </td>
-                <td class="text-muted">{{ $report->created_at->format('d M Y') }}</td>
+                <td class="text-white">{{ $report->created_at->format('d M Y') }}</td>
                 <td>
                     <div class="d-flex gap-1 flex-wrap">
 
@@ -105,7 +105,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="8" class="text-center py-5 text-muted">
+                <td colspan="8" class="text-center py-5 text-white">
                     No reports found. 
                 </td>
             </tr>

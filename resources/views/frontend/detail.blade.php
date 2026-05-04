@@ -36,7 +36,7 @@
                     @else
                     <div class="rounded-3 w-100 d-flex align-items-center justify-content-center"
                         style="height:400px; background:#1a1a1a">
-                        <i class="fas fa-car fa-4x text-muted"></i>
+                        <i class="fas fa-car fa-4x text-white"></i>
                     </div>
                     @endif
                 </div>
@@ -73,7 +73,7 @@
 
                 {{-- Views Counter --}}
                 <div class="mt-3">
-                    <small class="text-muted">
+                    <small class="text-white">
                         <i class="fas fa-eye me-1"></i> {{ number_format($item->views) }} views
                     </small>
                 </div>
@@ -102,13 +102,13 @@
 
                     <div class="d-flex gap-3 mb-4 flex-wrap">
                         @if($item->city)
-                        <span class="text-muted-brand">
+                        <span class="text-white">
                             <i class="fas fa-map-marker-alt text-red me-1"></i>
                             {{ $item->city->name }}
                         </span>
                         @endif
                         @if($item->category)
-                        <span class="text-muted-brand">
+                        <span class="text-white-brand">
                             <i class="fas fa-tag text-red me-1"></i>
                             {{ $item->category->name }}
                         </span>
@@ -129,7 +129,7 @@
 
                     {{-- Description --}}
                     @if($item->description)
-                    <p class="text-muted-brand mb-4">{{ $item->description }}</p>
+                    <p class="text-white-brand mb-4">{{ $item->description }}</p>
                     @endif
 
                     {{-- Success Message --}}
@@ -193,7 +193,7 @@
 
                     {{-- Report Button --}}
                     <div class="mt-3 text-center">
-                        <button class="btn btn-link text-muted small p-0"
+                        <button class="btn btn-link text-white small p-0"
                             data-bs-toggle="modal" data-bs-target="#reportModal">
                             <i class="fas fa-flag me-1"></i> Report this listing
                         </button>

@@ -9,7 +9,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h4 class="fw-bold mb-0">My Dashboard</h4>
-            <p class="text-muted mb-0">Welcome, {{ auth()->user()->name }}!</p>
+            <p class="text-white mb-0">Welcome, {{ auth()->user()->name }}!</p>
         </div>
         <a href="{{ route('user.items.create') }}" class="btn btn-danger">
             <i class="fas fa-plus me-2"></i> Add New Vehicle
@@ -24,7 +24,7 @@
                     <i class="fas fa-car fa-2x text-danger"></i>
                 </div>
                 <h3 class="fw-bold text-white mb-0">{{ $totalItems }}</h3>
-                <p class="text-muted mb-0">Total Listings</p>
+                <p class="text-white mb-0">Total Listings</p>
             </div>
         </div>
         <div class="col-md-4">
@@ -33,7 +33,7 @@
                     <i class="fas fa-eye fa-2x text-danger"></i>
                 </div>
                 <h3 class="fw-bold text-white mb-0">{{ number_format($totalViews) }}</h3>
-                <p class="text-muted mb-0">Total Views</p>
+                <p class="text-white mb-0">Total Views</p>
             </div>
         </div>
         <div class="col-md-4">
@@ -42,7 +42,7 @@
                     <i class="fas fa-envelope fa-2x text-danger"></i>
                 </div>
                 <h3 class="fw-bold text-white mb-0">{{ $totalInquiries }}</h3>
-                <p class="text-muted mb-0">Total Inquiries</p>
+                <p class="text-white mb-0">Total Inquiries</p>
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
                                 style="width:50px;height:40px;object-fit:cover;border-radius:6px" />
                             @else
                             <div style="width:50px;height:40px;background:#242424;border-radius:6px;display:flex;align-items:center;justify-content:center">
-                                <i class="fas fa-car text-muted"></i>
+                                <i class="fas fa-car text-white"></i>
                             </div>
                             @endif
                         </td>
@@ -123,7 +123,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="8" class="text-center py-5 text-muted">
+                        <td colspan="8" class="text-center py-5 text-white">
                             No items yet.
                             <a href="{{ route('user.items.create') }}" class="text-danger">Add your first vehicle!</a>
                         </td>
@@ -173,7 +173,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="text-center py-4 text-muted">No inquiries yet.</td>
+                            <td colspan="5" class="text-center py-4 text-white">No inquiries yet.</td>
                         </tr>
                         @endforelse
                     </tbody>
