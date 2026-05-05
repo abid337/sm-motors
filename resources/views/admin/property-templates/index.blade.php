@@ -39,7 +39,7 @@
                 <input type="number" name="sort_order" class="form-control"
                     placeholder="0" value="0" />
             </div>
-            <div class="col-md-1 d-flex align-items-end">
+            <div class="col-md-2 d-flex align-items-end">
                 <div class="form-check mb-2">
                     <input type="checkbox" name="required" class="form-check-input" id="required" />
                     <label class="form-check-label text-white" for="required">Required</label>
@@ -80,7 +80,7 @@
                 @foreach($category->propertyTemplates as $template)
                 <tr>
                     <td class="text-white">{{ $template->label }}</td>
-                    <td class="text-muted">{{ $template->placeholder ?? '—' }}</td>
+                    <td class="text-white">{{ $template->placeholder ?? '—' }}</td>
                     <td>
                         @if($template->required)
                         <span class="badge bg-danger">Yes</span>
@@ -157,7 +157,7 @@
         </table>
     </div>
     @else
-    <p class="text-muted mb-0">No properties defined for this category yet.</p>
+    <p class="text-white mb-0">No properties defined for this category yet.</p>
     @endif
 </div>
 @endforeach
