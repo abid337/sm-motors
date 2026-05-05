@@ -172,88 +172,121 @@
 
 @push('scripts')
 <script>
-    // Add Property Row
+    // 1. Category change → Auto load templates
+    document.querySelector('select[name="category_id"]').addEventListener('change', function() {
+        const categoryId = this.value;
+        const container = document.getElementById('properties-container');
+        container.innerHTML = '';
+        if (!categoryId) return;
+
+        fetch(`/api/property-templates/${categoryId}`)
+            .then(res => res.json())
+            .then(templates => {
+                if (templates.length === 0) return;
+                templates.forEach(t => {
+                    const row = document.createElement('div');
+                    row.className = 'row g-2 mb-2 prop-row';
+                    row.innerHTML = `
+                        <div class="col-5">
+                            <input type="text" name="prop_keys[]" class="form-control"
+                                   value="${t.label}" readonly style="opacity:0.7"/>
+                        </div>
+                        <div class="col-6">
+                            <input type="text" name="prop_values[]" class="form-control"
+                                   placeholder="${t.placeholder || 'Enter ' + t.label}"
+                                   ${t.required ? 'required' : ''}/>
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-outline-danger remove-prop w-100">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    `;
+                    container.appendChild(row);
+                });
+            })
+            .catch(err => console.error('Error:', err));
+    });
+
+    // 2. Add Property Row
     document.getElementById('add-prop').addEventListener('click', function() {
         const container = document.getElementById('properties-container');
         const row = document.createElement('div');
         row.className = 'row g-2 mb-2 prop-row';
         row.innerHTML = `
-        <div class="col-5">
-            <input type="text" name="prop_keys[]" class="form-control"
-                   placeholder="Key (e.g. engine)"/>
-        </div>
-        <div class="col-6">
-            <input type="text" name="prop_values[]" class="form-control"
-                   placeholder="Value (e.g. 1800cc)"/>
-        </div>
-        <div class="col-1">
-            <button type="button" class="btn btn-outline-danger remove-prop w-100">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    `;
+            <div class="col-5">
+                <input type="text" name="prop_keys[]" class="form-control"
+                       placeholder="Key (e.g. engine)"/>
+            </div>
+            <div class="col-6">
+                <input type="text" name="prop_values[]" class="form-control"
+                       placeholder="Value (e.g. 1800cc)"/>
+            </div>
+            <div class="col-1">
+                <button type="button" class="btn btn-outline-danger remove-prop w-100">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
         container.appendChild(row);
     });
 
-    // Remove Property Row
+    // 3. Remove Property Row
     document.addEventListener('click', function(e) {
         if (e.target.closest('.remove-prop')) {
             e.target.closest('.prop-row').remove();
         }
     });
 
-    // Thumbnail Preview
+    // 4. Thumbnail Preview
     document.getElementById('thumbnail-input').addEventListener('change', function() {
         const preview = document.getElementById('thumbnail-preview');
         if (this.files[0]) {
             const reader = new FileReader();
             reader.onload = e => {
                 preview.innerHTML = `
-                <img src="${e.target.result}"
-                     class="img-fluid rounded-2"
-                     style="max-height:150px; border:2px solid rgba(255,255,255,0.1)"/>
-            `;
+                    <img src="${e.target.result}"
+                         class="img-fluid rounded-2"
+                         style="max-height:150px; border:2px solid rgba(255,255,255,0.1)"/>
+                `;
             };
             reader.readAsDataURL(this.files[0]);
         }
     });
 
-    // Extra Images Preview
+    // 5. Extra Images Preview
     document.getElementById('extra-images').addEventListener('change', function() {
         const preview = document.getElementById('extra-preview');
         const countDiv = document.getElementById('images-count');
         preview.innerHTML = '';
         countDiv.innerHTML = '';
-
         if (this.files.length === 0) return;
 
-        // Show count
         countDiv.innerHTML = `
-        <span style="color:#e63946; font-size:0.85rem; font-weight:600;">
-            <i class="fas fa-images me-1"></i>
-            ${this.files.length} image(s) selected
-        </span>
-    `;
+            <span style="color:#e63946; font-size:0.85rem; font-weight:600;">
+                <i class="fas fa-images me-1"></i>
+                ${this.files.length} image(s) selected
+            </span>
+        `;
 
-        // Make Preview
         Array.from(this.files).forEach((file, index) => {
             const reader = new FileReader();
             reader.onload = e => {
                 const div = document.createElement('div');
                 div.style.cssText = 'position:relative; display:inline-block';
                 div.innerHTML = `
-                <img src="${e.target.result}"
-                     style="width:75px; height:60px; object-fit:cover;
-                            border-radius:6px;
-                            border:2px solid rgba(255,255,255,0.15)"/>
-                <span style="position:absolute; top:-6px; right:-6px;
-                             background:#e63946; color:white; border-radius:50%;
-                             width:20px; height:20px; font-size:0.7rem;
-                             display:flex; align-items:center; justify-content:center;
-                             font-weight:700">
-                    ${index + 1}
-                </span>
-            `;
+                    <img src="${e.target.result}"
+                         style="width:75px; height:60px; object-fit:cover;
+                                border-radius:6px;
+                                border:2px solid rgba(255,255,255,0.15)"/>
+                    <span style="position:absolute; top:-6px; right:-6px;
+                                 background:#e63946; color:white; border-radius:50%;
+                                 width:20px; height:20px; font-size:0.7rem;
+                                 display:flex; align-items:center; justify-content:center;
+                                 font-weight:700">
+                        ${index + 1}
+                    </span>
+                `;
                 preview.appendChild(div);
             };
             reader.readAsDataURL(file);

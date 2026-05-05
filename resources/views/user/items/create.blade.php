@@ -25,6 +25,8 @@
         @csrf
 
         <div class="row g-4">
+
+            {{-- LEFT --}}
             <div class="col-lg-8">
 
                 {{-- Basic Info --}}
@@ -107,18 +109,12 @@
                     </div>
                 </div>
 
-                {{-- Gallery Images --}}
-                <div class="card bg-dark border-0 shadow mb-4">
-                    <div class="card-body p-4">
-                        <h6 class="fw-bold text-white mb-4">Gallery Images</h6>
-                        <input type="file" name="images[]" class="form-control" accept="image/*" multiple />
-                        <small class="text-white">You can select multiple images</small>
-                    </div>
-                </div>
-
             </div>
 
+            {{-- RIGHT --}}
             <div class="col-lg-4">
+
+                {{-- Main Photo --}}
                 <div class="card bg-dark border-0 shadow mb-4">
                     <div class="card-body p-4">
                         <h6 class="fw-bold text-white mb-3">Main Photo</h6>
@@ -127,15 +123,29 @@
                     </div>
                 </div>
 
+                {{-- Gallery Images --}}
+                <div class="card bg-dark border-0 shadow mb-4">
+                    <div class="card-body p-4">
+                        <h6 class="fw-bold text-white mb-3">Gallery Images</h6>
+                        <input type="file" name="images[]" class="form-control" accept="image/*" multiple />
+                        <small class="text-white">
+                            <i class="fas fa-info-circle me-1 text-danger"></i>
+                            <strong>Press</strong> Ctrl to select multiple images
+                        </small>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-danger w-100 py-3 fw-bold fs-5">
                     <i class="fas fa-plus me-2"></i> Add Vehicle
                 </button>
+
             </div>
         </div>
 
     </form>
 </div>
 @endsection
+
 @push('styles')
 <style>
     .form-label {
@@ -146,26 +156,64 @@
 
 @push('scripts')
 <script>
+    // 1. Category change Auto load templates
+    document.querySelector('select[name="category_id"]').addEventListener('change', function() {
+        const categoryId = this.value;
+        const container = document.getElementById('properties-container');
+        container.innerHTML = '';
+        if (!categoryId) return;
+
+        fetch(`/api/property-templates/${categoryId}`)
+            .then(res => res.json())
+            .then(templates => {
+                if (templates.length === 0) return;
+                templates.forEach(t => {
+                    const row = document.createElement('div');
+                    row.className = 'row g-2 mb-2 prop-row';
+                    row.innerHTML = `
+                        <div class="col-5">
+                            <input type="text" name="prop_keys[]" class="form-control"
+                                   value="${t.label}" readonly style="opacity:0.7"/>
+                        </div>
+                        <div class="col-6">
+                            <input type="text" name="prop_values[]" class="form-control"
+                                   placeholder="${t.placeholder || 'Enter ' + t.label}"
+                                   ${t.required ? 'required' : ''}/>
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-outline-danger remove-prop w-100">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    `;
+                    container.appendChild(row);
+                });
+            })
+            .catch(err => console.error('Error:', err));
+    });
+
+    // 2. Manually add property
     document.getElementById('add-prop').addEventListener('click', function() {
         const container = document.getElementById('properties-container');
         const row = document.createElement('div');
         row.className = 'row g-2 mb-2 prop-row';
         row.innerHTML = `
-        <div class="col-5">
-            <input type="text" name="prop_keys[]" class="form-control" placeholder="Key"/>
-        </div>
-        <div class="col-6">
-            <input type="text" name="prop_values[]" class="form-control" placeholder="Value"/>
-        </div>
-        <div class="col-1">
-            <button type="button" class="btn btn-outline-danger remove-prop w-100">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    `;
+            <div class="col-5">
+                <input type="text" name="prop_keys[]" class="form-control" placeholder="Key"/>
+            </div>
+            <div class="col-6">
+                <input type="text" name="prop_values[]" class="form-control" placeholder="Value"/>
+            </div>
+            <div class="col-1">
+                <button type="button" class="btn btn-outline-danger remove-prop w-100">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
         container.appendChild(row);
     });
 
+    // 3. Remove property row
     document.addEventListener('click', function(e) {
         if (e.target.closest('.remove-prop')) {
             e.target.closest('.prop-row').remove();
