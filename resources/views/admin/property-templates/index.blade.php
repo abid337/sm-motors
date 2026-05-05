@@ -14,7 +14,7 @@
     <h6 class="fw-bold text-white mb-4">Add New Property</h6>
     <form action="{{ route('admin.property-templates.store') }}" method="POST">
         @csrf
-        <div class="row g-3">
+        <div class="row g-3 align-items-end">
             <div class="col-md-3">
                 <label class="form-label">Category *</label>
                 <select name="category_id" class="form-select" required>
@@ -24,7 +24,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label class="form-label">Label *</label>
                 <input type="text" name="label" class="form-control"
                     placeholder="e.g. Mileage" required />
@@ -39,13 +39,13 @@
                 <input type="number" name="sort_order" class="form-control"
                     placeholder="0" value="0" />
             </div>
-            <div class="col-md-2 d-flex align-items-end">
+            <div class="col-md-2">
                 <div class="form-check mb-2">
                     <input type="checkbox" name="required" class="form-check-input" id="required" />
                     <label class="form-check-label text-white" for="required">Required</label>
                 </div>
             </div>
-            <div class="col-md-1 d-flex align-items-end">
+            <div class="col-md-1">
                 <button type="submit" class="btn btn-danger w-100">
                     <i class="fas fa-plus"></i> Add
                 </button>
