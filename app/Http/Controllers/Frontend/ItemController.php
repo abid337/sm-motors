@@ -53,8 +53,12 @@ class ItemController extends Controller
             ->where('status', 'published')
             ->firstOrFail();
 
-        // Increment Views
-        $item->incrementViews();
+        // Session check 
+        $sessionKey = 'viewed_item_' . $item->id;
+        if (!session()->has($sessionKey)) {
+            $item->incrementViews();
+            session()->put($sessionKey, true);
+        }
 
         $related = Item::with('city')
             ->where('category_id', $item->category_id)
