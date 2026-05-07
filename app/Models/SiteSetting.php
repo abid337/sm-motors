@@ -9,7 +9,7 @@ class SiteSetting extends Model
 {
     protected $fillable = ['key', 'value'];
 
-    // Single setting get karo
+    
     public static function get($key, $default = null)
     {
         return Cache::remember('setting_' . $key, 3600, function () use ($key, $default) {
@@ -26,11 +26,17 @@ class SiteSetting extends Model
     // Setting save 
     public static function set($key, $value)
     {
-        static::updateOrCreate(
-            ['key' => $key],
-            ['value' => $value]
-        );
-        Cache::forget('setting_' . $key);
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('site_settings')) {
+                static::updateOrCreate(
+                    ['key' => $key],
+                    ['value' => $value]
+                );
+                Cache::forget('setting_' . $key);
+            }
+        } catch (\Exception $e) {
+            
+        }
     }
 
     
