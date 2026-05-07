@@ -248,15 +248,44 @@
         </div>
     </footer>
 
-    {{-- FLOATING ACTIONS (Expandable Menu) --}}
+    {{-- FLOATING ACTIONS --}}
     <div class="floating-container" id="floating-menu">
-        <!-- Sub Buttons (Hidden by default) -->
+        <!-- Chat Window -->
+        <div class="chat-window" id="chat-window">
+            <div class="chat-header">
+                <div class="d-flex align-items-center">
+                    <div class="chat-avatar me-2">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0">SM-Autos AI</h6>
+                        <small class="opacity-75">Online</small>
+                    </div>
+                </div>
+                <button class="btn-close btn-close-white small" id="close-chat"></button>
+            </div>
+            <div class="chat-body" id="chat-body">
+                <div class="chat-msg bot">
+                    <p>Hi! I'm your SM-Autos assistant. How can I help you today?</p>
+                </div>
+                <!-- Typing Indicator (Hidden by default) -->
+                <div class="typing-indicator" id="typing-indicator" style="display: none;">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="chat-footer">
+                <input type="text" placeholder="Type a message..." class="chat-input" id="chat-input">
+                <button class="chat-send" id="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <!-- Sub Buttons -->
         <div class="sub-buttons">
-            <!-- Chatbot Button -->
-            <a href="#" class="float-btn chatbot-btn" title="Chat with AI" id="chatbot-toggle">
+            <button class="float-btn chatbot-btn" title="Chat with AI" id="chatbot-toggle">
                 <i class="fas fa-robot"></i>
-            </a>
-            <!-- WhatsApp Button -->
+            </button>
             <a href="https://wa.me/{{ setting('whatsapp_number', '923096527842') }}" target="_blank" class="float-btn whatsapp-btn" aria-label="WhatsApp">
                 <i class="fab fa-whatsapp"></i>
             </a>
@@ -271,14 +300,76 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 
-    {{-- FLOATING MENU TOGGLE JS --}}
+    {{-- FLOATING MENU & CHAT TOGGLE JS --}}
     <script>
         const menuToggle = document.getElementById('menu-toggle');
         const floatingMenu = document.getElementById('floating-menu');
+        const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatWindow = document.getElementById('chat-window');
+        const closeChat = document.getElementById('close-chat');
+        const chatBody = document.getElementById('chat-body');
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+        const typingIndicator = document.getElementById('typing-indicator');
 
+        // Toggle Main Menu
         menuToggle.addEventListener('click', function() {
             floatingMenu.classList.toggle('active');
         });
+
+        // Open Chat Window with Typing Animation
+        chatbotToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            chatWindow.classList.toggle('show');
+            
+            if(chatWindow.classList.contains('show')) {
+                showTyping();
+                setTimeout(() => {
+                    hideTyping();
+                    scrollToBottom();
+                }, 1500);
+            }
+        });
+
+        // Close Chat Window
+        closeChat.addEventListener('click', function() {
+            chatWindow.classList.remove('show');
+        });
+
+        // Send Message 
+        function sendMessage() {
+            const text = chatInput.value.trim();
+            if (text === '') return;
+
+            // Add User Message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-msg user';
+            userMsg.innerHTML = `<p>${text}</p>`;
+            chatBody.insertBefore(userMsg, typingIndicator);
+            
+            chatInput.value = '';
+            scrollToBottom();
+
+            // Simulate Bot Response
+            showTyping();
+            setTimeout(() => {
+                hideTyping();
+                const botMsg = document.createElement('div');
+                botMsg.className = 'chat-msg bot';
+                botMsg.innerHTML = `<p>Thanks for your message! Our team will get back to you soon.</p>`;
+                chatBody.insertBefore(botMsg, typingIndicator);
+                scrollToBottom();
+            }, 2000);
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        function showTyping() { typingIndicator.style.display = 'flex'; }
+        function hideTyping() { typingIndicator.style.display = 'none'; }
+        function scrollToBottom() { chatBody.scrollTop = chatBody.scrollHeight; }
 
         // Auto dismiss alerts
         setTimeout(function() {
