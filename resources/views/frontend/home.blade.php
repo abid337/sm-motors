@@ -12,44 +12,35 @@
 
         <div class="row justify-content-center">
             <div class="col-lg-9 col-xl-8">
-                <div class="hero-search-card card">
-                    <div class="card-body p-0">
-                        <form action="{{ route('items.search') }}" method="GET" role="search">
-                            <div class="row g-0">
-                                <div class="col-lg-4">
-                                    <input
-                                        type="text"
-                                        class="form-control form-control-lg"
-                                        name="keyword"
-                                        placeholder="Car Make or Model"
-                                    />
-                                </div>
-                                <div class="col-lg-3">
-                                    <select class="form-select form-select-lg" name="city_id">
-                                        <option value="">Select City</option>
-                                        @foreach($cities as $city)
-                                            <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-lg-3">
-                                    <select class="form-select form-select-lg" name="price_range">
-                                        <option value="">Select Price Range</option>
-                                        <option value="0-500000">Under 5 Lac</option>
-                                        <option value="500000-1500000">5 - 15 Lac</option>
-                                        <option value="1500000-3000000">15 - 30 Lac</option>
-                                        <option value="3000000-6000000">30 - 60 Lac</option>
-                                        <option value="6000000-999999999">Above 60 Lac</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-2">
-                                    <button type="submit" class="btn search-btn w-100 h-100 fw-bold fs-5">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                <div class="hero-search-card">
+                    <form action="{{ route('items.search') }}" method="GET" class="row g-0">
+                        <div class="col-md-4">
+                            <input type="text" name="keyword" class="form-control" placeholder="Car Make or Model" />
+                        </div>
+                        <div class="col-md-3">
+                            <select name="city_id" class="form-select">
+                                <option value="">Select City</option>
+                                @foreach($cities as $city)
+                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select name="price_range" class="form-select">
+                                <option value="">Select Price Range</option>
+                                <option value="0-500000">Under 5 Lac</option>
+                                <option value="500000-1500000">5 - 15 Lac</option>
+                                <option value="1500000-3000000">15 - 30 Lac</option>
+                                <option value="3000000-6000000">30 - 60 Lac</option>
+                                <option value="6000000-999999999">Above 60 Lac</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="search-btn" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

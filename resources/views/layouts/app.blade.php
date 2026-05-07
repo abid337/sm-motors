@@ -140,7 +140,8 @@
     </nav>
 
     {{-- ALERTS --}}
-    <div class="container mt-3">
+    @if(session('success') || session('error') || $errors->any())
+    <div class="container">
         @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm" role="alert">
             <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
@@ -164,6 +165,7 @@
         </div>
         @endif
     </div>
+    @endif
 
     {{-- PAGE CONTENT --}}
     @yield('content')

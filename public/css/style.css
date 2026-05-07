@@ -212,7 +212,13 @@ img { display: block; max-width: 100%; }
   border: none;
   color: var(--white);
   font-size: 1.25rem;
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: var(--transition);
+  width: 100%;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 .search-btn:hover { background: var(--primary-dark); box-shadow: var(--shadow-red); }
 

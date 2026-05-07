@@ -47,7 +47,7 @@
         .btn-danger:hover {
             opacity: 0.9;
         }
-    </style>
+
         .admin-sidebar {
             width: 250px;
             height: 100vh;
@@ -117,8 +117,8 @@
         .admin-nav-item:hover,
         .admin-nav-item.active {
             color: #fff;
-            background: rgba(230, 57, 70, 0.1);
-            border-left-color: #e63946;
+            background: rgba(var(--primary-rgb), 0.1);
+            border-left-color: var(--primary);
         }
 
         .admin-nav-item i {
@@ -243,8 +243,8 @@
 
         .form-control:focus,
         .form-select:focus {
-            border-color: #e63946 !important;
-            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2) !important;
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2) !important;
         }
 
         .form-control::placeholder {
@@ -258,8 +258,8 @@
         }
 
         .btn-danger {
-            background: #e63946;
-            border-color: #e63946;
+            background: var(--primary);
+            border-color: var(--primary);
         }
 
         .btn-danger:hover {
