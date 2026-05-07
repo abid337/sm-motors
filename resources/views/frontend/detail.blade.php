@@ -5,13 +5,13 @@
 @section('content')
 
 {{-- BREADCRUMB --}}
-<div class="breadcrumb-bar">
+<div class="breadcrumb-bar" style="background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 12px 0;">
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('items.search') }}">Search</a></li>
-                <li class="breadcrumb-item active">{{ $item->title }}</li>
+                <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-white opacity-75 text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('items.search') }}" class="text-white opacity-75 text-decoration-none">Search</a></li>
+                <li class="breadcrumb-item active text-white fw-bold" aria-current="page">{{ $item->title }}</li>
             </ol>
         </nav>
     </div>
@@ -77,7 +77,7 @@
                 </div>
 
                 {{-- ===== CAR DETAILS NEECHE GALLERY KE ===== --}}
-                <div class="detail-info-card card p-4">
+                <div class="detail-info-card card p-4 border-secondary" style="background: #1a1a1a;">
 
                     {{-- Badges --}}
                     <div class="mb-3">
@@ -138,21 +138,21 @@
                 <div class="sticky-sidebar">
 
                     {{-- Seller Info Card --}}
-                    <div class="card p-4 mb-3">
-                        <h6 class="fw-bold mb-3" style="color: #1a1a1a !important">
+                    <div class="card p-4 mb-3 border-secondary" style="background: #1a1a1a;">
+                        <h6 class="fw-bold mb-3 text-white">
                             <i class="fas fa-user-circle me-2 text-danger"></i>Seller Information
                         </h6>
 
                         <div class="d-flex align-items-center mb-3">
                             <div class="bg-danger text-white rounded-circle d-flex align-items-center 
                     justify-content-center me-3 fw-bold"
-                                style="width:48px; height:48px; font-size:18px; flex-shrink:0;">
+                                 style="width:48px; height:48px; font-size:18px; flex-shrink:0;">
                                 {{ strtoupper(substr($item->user->name, 0, 1)) }}
                             </div>
                             <div>
-                                <p class="mb-0 fw-bold" style="color: #1a1a1a !important">{{ $item->user->name }}</p>
+                                <p class="mb-0 fw-bold text-white">{{ $item->user->name }}</p>
                                 @if($item->user->city)
-                                <small class="text-white">{{ $item->user->city }}</small>
+                                <small class="text-white opacity-75">{{ $item->user->city }}</small>
                                 @endif
                             </div>
                         </div>
@@ -176,8 +176,8 @@
                     </div>
 
                     {{-- Inquiry Form Card --}}
-                    <div class="card p-4">
-                        <h6 class="fw-bold mb-3" style="color: #1a1a1a !important">
+                    <div class="card p-4 border-secondary" style="background: #1a1a1a;">
+                        <h6 class="fw-bold mb-3 text-white">
                             <i class="fas fa-envelope me-2 text-danger"></i>Send Inquiry
                         </h6>
 
