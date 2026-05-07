@@ -248,15 +248,39 @@
         </div>
     </footer>
 
-    {{-- WHATSAPP BUTTON --}}
-    <a href="https://wa.me/{{ setting('whatsapp_number', '923096527842') }}" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    {{-- FLOATING ACTIONS (Expandable Menu) --}}
+    <div class="floating-container" id="floating-menu">
+        <!-- Sub Buttons (Hidden by default) -->
+        <div class="sub-buttons">
+            <!-- Chatbot Button -->
+            <a href="#" class="float-btn chatbot-btn" title="Chat with AI" id="chatbot-toggle">
+                <i class="fas fa-robot"></i>
+            </a>
+            <!-- WhatsApp Button -->
+            <a href="https://wa.me/{{ setting('whatsapp_number', '923096527842') }}" target="_blank" class="float-btn whatsapp-btn" aria-label="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <!-- Main Toggle Button -->
+        <button class="main-float-btn" id="menu-toggle" aria-label="Toggle Menu">
+            <i class="fas fa-comments main-icon"></i>
+            <i class="fas fa-times close-icon"></i>
+        </button>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 
-    {{-- AUTO DISMISS ALERTS --}}
+    {{-- FLOATING MENU TOGGLE JS --}}
     <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const floatingMenu = document.getElementById('floating-menu');
+
+        menuToggle.addEventListener('click', function() {
+            floatingMenu.classList.toggle('active');
+        });
+
+        // Auto dismiss alerts
         setTimeout(function() {
             document.querySelectorAll('.alert').forEach(function(alert) {
                 var bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
