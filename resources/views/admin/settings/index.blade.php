@@ -24,9 +24,16 @@
                         <input type="text" name="site_name" class="form-control"
                                value="{{ $settings['site_name'] ?? '' }}" required/>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Site Email</label>
-                        <input type="email" name="site_email" class="form-control"
+                    {{-- Footer About --}}
+                    <div class="col-md-12 mb-4">
+                        <label class="form-label text-white-50 small uppercase fw-bold">Footer Description</label>
+                        <textarea name="footer_about" class="form-control bg-dark border-secondary text-white" rows="3">{{ $settings['footer_about'] ?? '' }}</textarea>
+                        <div class="form-text text-muted">Brief description of your business shown in the footer.</div>
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <hr class="border-secondary opacity-25">
+                    </div>    <input type="email" name="site_email" class="form-control"
                                value="{{ $settings['site_email'] ?? '' }}"/>
                     </div>
                     <div class="col-md-12">

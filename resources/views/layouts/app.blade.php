@@ -176,19 +176,13 @@
             <div class="row g-4">
 
                 {{-- Brand --}}
-                <div class="col-lg-3 col-md-6">
-                    <a class="d-flex align-items-center gap-2 fw-bold mb-3 text-decoration-none text-white fs-4" href="{{ route('home') }}">
-                        @if(setting('site_logo'))
-                        <img src="{{ setting('site_logo') }}" style="max-height:40px; object-fit:contain" />
-                        @else
-                        <div class="logo rounded-circle d-flex align-items-center justify-content-center">
-                            <i class="fas fa-car"></i>
-                        </div>
-                        {{ setting('site_name', 'SM-Autos') }}
-                        @endif
-                    </a>
-                    <p class="text-white-brand">
-                        {{ setting('footer_about', 'Pakistan\'s #1 platform for buying and selling vehicles.') }}
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="footer-logo mb-3">
+                        <div class="logo me-2"><i class="fas fa-car text-white"></i></div>
+                        <span class="h4 mb-0 fw-bold text-white">{{ setting('site_name', 'SM-Autos') }}</span>
+                    </div>
+                    <p class="text-white opacity-75 mb-4">
+                        {{ setting('footer_about', "Pakistan's #1 platform for buying and selling vehicles.") }}
                     </p>
                 </div>
 

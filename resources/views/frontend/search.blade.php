@@ -8,19 +8,19 @@
 <div class="filter-bar">
     <div class="container">
         <form action="{{ route('items.search') }}" method="GET">
-            <div class="row g-2 align-items-end hero-search-form" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 15px; border: 1px solid rgba(255,255,255,0.05)">
+            <div class="row g-2 align-items-end hero-search-form" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 20px; border: 1px solid rgba(255,255,255,0.05)">
                 <div class="col-lg-4 col-md-6 search-input-group">
                     <div class="w-100">
-                        <label class="form-label fw-semibold text-white small mb-1 ms-3">Search Keyword</label>
+                        <label class="form-label fw-semibold text-white small mb-1 ms-1">Search Keyword</label>
                         <input type="text" class="search-input" name="keyword"
                                placeholder="Car Make or Model"
-                               value="{{ request('keyword') }}" style="text-align: left; padding-left: 15px;"/>
+                               value="{{ request('keyword') }}" style="text-align: left; padding-left: 15px; height: 50px;"/>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 search-input-group">
                     <div class="w-100">
-                        <label class="form-label fw-semibold text-white small mb-1 ms-3">City</label>
-                        <select class="search-select" name="city_id" style="text-align: left; padding-left: 15px;">
+                        <label class="form-label fw-semibold text-white small mb-1 ms-1">City</label>
+                        <select class="search-select" name="city_id" style="text-align: left; padding-left: 15px; height: 50px;">
                             <option value="">All Cities</option>
                             @foreach($cities as $city)
                                 <option value="{{ $city->id }}"
@@ -33,8 +33,8 @@
                 </div>
                 <div class="col-lg-3 col-md-6 search-input-group">
                     <div class="w-100">
-                        <label class="form-label fw-semibold text-white small mb-1 ms-3">Price Range</label>
-                        <select class="search-select" name="price_range" style="text-align: left; padding-left: 15px;">
+                        <label class="form-label fw-semibold text-white small mb-1 ms-1">Price Range</label>
+                        <select class="search-select" name="price_range" style="text-align: left; padding-left: 15px; height: 50px;">
                             <option value="">All Prices</option>
                             <option value="0-500000" {{ request('price_range') == '0-500000' ? 'selected' : '' }}>Under 5 Lac</option>
                             <option value="500000-1500000" {{ request('price_range') == '500000-1500000' ? 'selected' : '' }}>5 - 15 Lac</option>
@@ -45,9 +45,12 @@
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6">
-                    <button class="search-submit-btn w-100" type="submit" style="border-radius: 8px; height: 50px;">
-                        <i class="fas fa-search me-1"></i> Search
-                    </button>
+                    <div class="w-100">
+                        <label class="form-label d-none d-lg-block mb-1">&nbsp;</label>
+                        <button class="search-submit-btn w-100" type="submit" style="border-radius: 8px; height: 50px;">
+                            <i class="fas fa-search me-1"></i> Search
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>
