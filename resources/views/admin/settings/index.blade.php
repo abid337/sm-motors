@@ -34,7 +34,7 @@
                     <div class="col-md-12">
                         <label class="form-label text-white-50 small uppercase fw-bold">Footer Description</label>
                         <textarea name="footer_about" class="form-control" rows="3">{{ $settings['footer_about'] ?? '' }}</textarea>
-                        <div class="form-text text-muted small">This text appears under the logo in your website footer.</div>
+                        <div class="form-text text-white small">This text appears under the logo in your website footer.</div>
                     </div>
 
                     <div class="col-md-6">

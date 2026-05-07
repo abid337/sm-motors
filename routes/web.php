@@ -114,25 +114,3 @@ Route::prefix('admin')
         Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
         Route::put('settings', [SettingsController::class, 'update'])->name('settings.update');
     });
-
-// ─────────────────────────────
-// MAINTENANCE ROUTES (Railway Fix)
-// ─────────────────────────────
-Route::get('/run-migrate', function() {
-    try {
-        // Sirf site_settings table banayein agar missing hai
-        if (!\Illuminate\Support\Facades\Schema::hasTable('site_settings')) {
-            \Illuminate\Support\Facades\Schema::create('site_settings', function ($table) {
-                $table->id();
-                $table->string('key')->unique();
-                $table->text('value')->nullable();
-                $table->timestamps();
-            });
-        }
-        
-        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'SiteSettingSeeder', '--force' => true]);
-        return "Success! Site settings table is ready and seeded. Your admin panel will work now.";
-    } catch (\Exception $e) {
-        return "Error: " . $e->getMessage();
-    }
-});
