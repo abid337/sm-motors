@@ -114,3 +114,16 @@ Route::prefix('admin')
         Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
         Route::put('settings', [SettingsController::class, 'update'])->name('settings.update');
     });
+
+// ─────────────────────────────
+// MAINTENANCE ROUTES (Railway Fix)
+// ─────────────────────────────
+Route::get('/run-migrate', function() {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'SiteSettingSeeder', '--force' => true]);
+        return "Migration and Seeding finished! Now your Admin panel and Email will work perfectly.";
+    } catch (\Exception $e) {
+        return "Error: " . $e->getMessage();
+    }
+});
