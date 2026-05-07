@@ -197,9 +197,9 @@
                             </a>
                         </li>
                         <li class="mb-2">
-                            <a href="mailto:{{ setting('site_email', 'info@sm-autos.com') }}" class="d-flex align-items-center gap-2 text-white-brand text-decoration-none footer-contact-link small">
+                            <a href="mailto:{{ setting('site_email', 'abid6527842@gmail.com') }}" class="d-flex align-items-center gap-2 text-white-brand text-decoration-none footer-contact-link small">
                                 <i class="fas fa-envelope" style="color:{{ setting('primary_color', '#e63946') }}; width:16px"></i>
-                                {{ setting('site_email', 'info@sm-autos.com') }}
+                                {{ setting('site_email', 'abid6527842@gmail.com') }}
                             </a>
                         </li>
                         <li class="d-flex align-items-center gap-2 text-white-brand small">
