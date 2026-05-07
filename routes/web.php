@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\InquiryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\Admin\PropertyTemplateController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\UserItemController;
 
@@ -24,7 +25,7 @@ Route::get('/item/{slug}', [FrontItemController::class, 'show'])->name('items.sh
 Route::post('/inquiry', [FrontItemController::class, 'inquiry'])->name('items.inquiry');
 Route::post('/report', [FrontReportController::class, 'store'])->name('items.report');
 
-//  Get property templates by category
+// Get property templates by category
 Route::get('/api/property-templates/{category}', function ($categoryId) {
     $templates = \App\Models\PropertyTemplate::where('category_id', $categoryId)
         ->orderBy('sort_order')
@@ -108,4 +109,8 @@ Route::prefix('admin')
         Route::post('property-templates', [PropertyTemplateController::class, 'store'])->name('property-templates.store');
         Route::put('property-templates/{propertyTemplate}', [PropertyTemplateController::class, 'update'])->name('property-templates.update');
         Route::delete('property-templates/{propertyTemplate}', [PropertyTemplateController::class, 'destroy'])->name('property-templates.destroy');
+
+        // Settings
+        Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
+        Route::put('settings', [SettingsController::class, 'update'])->name('settings.update');
     });

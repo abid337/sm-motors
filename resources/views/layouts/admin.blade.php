@@ -8,11 +8,46 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+    @php
+        $primary = setting('primary_color', '#e63946');
+        list($r, $g, $b) = sscanf($primary, "#%02x%02x%02x");
+        $primaryRGB = "$r, $g, $b";
+    @endphp
     <style>
+        :root {
+            --primary: {{ $primary }};
+            --primary-rgb: {{ $primaryRGB }};
+        }
         body {
             background: #0f0f0f;
         }
-
+        .admin-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(var(--primary-rgb, 230, 57, 70), 0.5);
+            border-radius: 2px;
+        }
+        .admin-brand .logo {
+            background: var(--primary);
+        }
+        .admin-nav-item:hover, .admin-nav-item.active {
+            background: rgba(var(--primary-rgb, 230, 57, 70), 0.1);
+            border-left-color: var(--primary);
+        }
+        .stat-icon {
+            background: rgba(var(--primary-rgb, 230, 57, 70), 0.15);
+            color: var(--primary);
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb, 230, 57, 70), 0.2) !important;
+        }
+        .btn-danger {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        .btn-danger:hover {
+            opacity: 0.9;
+        }
+    </style>
         .admin-sidebar {
             width: 250px;
             height: 100vh;
@@ -310,6 +345,10 @@
             <div class="admin-nav-label mt-2">Account</div>
             <a href="{{ route('home') }}" class="admin-nav-item" target="_blank">
                 <i class="fas fa-globe"></i> View Site
+            </a>
+            <a href="{{ route('admin.settings.index') }}"
+                class="admin-nav-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+                <i class="fas fa-cog"></i> Settings
             </a>
             <form action="{{ route('admin.logout') }}" method="POST">
                 @csrf

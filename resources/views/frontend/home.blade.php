@@ -7,8 +7,8 @@
 {{-- HERO SECTION --}}
 <section class="hero-section text-white text-center py-5" aria-label="Search vehicles">
     <div class="container py-4">
-        <h1 class="fw-bold mb-3">Find Used Cars in Pakistan</h1>
-        <p class="lead mb-5">With thousands of vehicles, we have just the right one for you</p>
+        <h1 class="fw-bold mb-3">{{ setting('hero_title', 'Find Used Cars in Pakistan') }}</h1>
+        <p class="lead mb-5">{{ setting('hero_subtitle', 'With thousands of vehicles, we have just the right one for you') }}</p>
 
         <div class="row justify-content-center">
             <div class="col-lg-9 col-xl-8">

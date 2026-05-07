@@ -53,7 +53,7 @@
                     <img src="{{ $item->thumbnail }}"
                         class="gallery-thumb"
                         style="width:85px; height:65px; object-fit:cover; cursor:pointer;
-                                border-radius:8px; border:2px solid #e63946; transition: all 0.2s"
+                                border-radius:8px; border:2px solid var(--primary); transition: all 0.2s"
                         onclick="changeImage(this, '{{ $item->thumbnail }}')"
                         alt="thumbnail" />
                     @endif
@@ -326,7 +326,7 @@
         document.querySelectorAll('.gallery-thumb').forEach(function(thumb) {
             thumb.style.border = '2px solid transparent';
         });
-        clickedThumb.style.border = '2px solid #e63946';
+        clickedThumb.style.border = '2px solid var(--primary)';
     }
 </script>
 @endpush
