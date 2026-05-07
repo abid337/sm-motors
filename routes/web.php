@@ -120,9 +120,18 @@ Route::prefix('admin')
 // ─────────────────────────────
 Route::get('/run-migrate', function() {
     try {
-        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        // Sirf site_settings table banayein agar missing hai
+        if (!\Illuminate\Support\Facades\Schema::hasTable('site_settings')) {
+            \Illuminate\Support\Facades\Schema::create('site_settings', function ($table) {
+                $table->id();
+                $table->string('key')->unique();
+                $table->text('value')->nullable();
+                $table->timestamps();
+            });
+        }
+        
         \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'SiteSettingSeeder', '--force' => true]);
-        return "Migration and Seeding finished! Now your Admin panel and Email will work perfectly.";
+        return "Success! Site settings table is ready and seeded. Your admin panel will work now.";
     } catch (\Exception $e) {
         return "Error: " . $e->getMessage();
     }
