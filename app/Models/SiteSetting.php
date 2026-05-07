@@ -36,6 +36,10 @@ class SiteSetting extends Model
     
     public static function getAllSettings()
     {
-        return static::all()->pluck('value', 'key');
+        try {
+            return static::all()->pluck('value', 'key');
+        } catch (\Exception $e) {
+            return collect();
+        }
     }
 }
