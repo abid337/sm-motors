@@ -115,7 +115,7 @@
                         <input type="text" name="whatsapp_number" class="form-control"
                                placeholder="923001234567"
                                value="{{ $settings['whatsapp_number'] ?? '' }}"/>
-                        <small class="text-muted">923096527842</small>
+                        <small class="text-white">923096527842</small>
                     </div>
                 </div>
             </div>
@@ -144,7 +144,7 @@
                 <div class="mb-3">
                     <label class="form-label">Upload New Logo</label>
                     <input type="file" name="site_logo" class="form-control" accept="image/*"/>
-                    <small class="text-muted">PNG with transparent background recommended</small>
+                    <small class="text-white">PNG with transparent background recommended</small>
                 </div>
 
                 {{-- Current Favicon --}}
@@ -160,7 +160,7 @@
                 <div class="mb-3">
                     <label class="form-label">Upload New Favicon</label>
                     <input type="file" name="site_favicon" class="form-control" accept="image/*"/>
-                    <small class="text-muted">32x32 or 64x64 PNG recommended</small>
+                    <small class="text-white">32x32 or 64x64 PNG recommended</small>
                 </div>
             </div>
 
@@ -179,7 +179,7 @@
                                value="{{ $settings['primary_color'] ?? '#e63946' }}"
                                placeholder="#e63946"/>
                     </div>
-                    <small class="text-muted">Site main color — buttons, links, etc.</small>
+                    <small class="text-white">Site main color — buttons, links, etc.</small>
                 </div>
 
                 <div class="mb-3">
@@ -192,7 +192,7 @@
                                value="{{ $settings['secondary_color'] ?? '#1a1a1a' }}"
                                placeholder="#1a1a1a"/>
                     </div>
-                    <small class="text-muted">Used for Navbar background.</small>
+                    <small class="text-white">Used for Navbar background.</small>
                 </div>
             </div>
 
