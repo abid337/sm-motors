@@ -13,8 +13,13 @@ class SiteSetting extends Model
     public static function get($key, $default = null)
     {
         return Cache::remember('setting_' . $key, 3600, function () use ($key, $default) {
-            $setting = static::where('key', $key)->first();
-            return $setting ? $setting->value : $default;
+            try {
+                $setting = static::where('key', $key)->first();
+                return $setting ? $setting->value : $default;
+            } catch (\Exception $e) {
+                // Table might not exist yet during migration/deployment
+                return $default;
+            }
         });
     }
 

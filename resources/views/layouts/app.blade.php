@@ -31,33 +31,13 @@
     @endphp
     <style>
         :root {
-            --primary: {
-                    {
-                    $primary
-                }
-            }
-
-            ;
-
-            --primary-rgb: {
-                    {
-                    $primaryRGB
-                }
-            }
-
-            ;
-            --font: 'Outfit',
-            sans-serif;
+            --primary: {{ $primary }};
+            --primary-rgb: {{ $primaryRGB }};
+            --font: 'Outfit', sans-serif;
         }
 
         .navbar {
-            background-color: {
-                    {
-                    $secondary
-                }
-            }
-
-            !important;
+            background-color: {{ $secondary }} !important;
         }
 
         .btn-danger,
