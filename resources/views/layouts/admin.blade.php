@@ -216,14 +216,41 @@
 
         .admin-table tbody td {
             padding: 14px 16px;
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.85) !important;
             border-color: rgba(255, 255, 255, 0.06);
             vertical-align: middle;
             font-size: 0.9rem;
         }
+        .admin-table tbody td strong {
+            color: #fff !important;
+        }
 
         .admin-table tbody tr:hover {
             background: rgba(255, 255, 255, 0.03);
+        }
+
+        /* PAGINATION STYLES */
+        .pagination {
+            margin-bottom: 0;
+            gap: 5px;
+        }
+        .page-link {
+            background: #242424 !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+            color: #fff !important;
+            border-radius: 6px !important;
+            padding: 8px 16px;
+        }
+        .page-item.active .page-link {
+            background: var(--primary) !important;
+            border-color: var(--primary) !important;
+        }
+        .page-link:hover {
+            background: #333 !important;
+        }
+        .page-item.disabled .page-link {
+            background: #1a1a1a !important;
+            color: rgba(255, 255, 255, 0.3) !important;
         }
 
         .admin-card {

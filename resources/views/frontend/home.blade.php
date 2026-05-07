@@ -12,22 +12,22 @@
 
         <div class="row justify-content-center">
             <div class="col-lg-9 col-xl-8">
-                <div class="hero-search-card">
-                    <form action="{{ route('items.search') }}" method="GET" class="row g-0">
-                        <div class="col-md-4">
-                            <input type="text" name="keyword" class="form-control" placeholder="Car Make or Model" />
+                <div class="hero-search-wrapper">
+                    <form action="{{ route('items.search') }}" method="GET" class="hero-search-form">
+                        <div class="search-input-group">
+                            <input type="text" name="keyword" class="search-input" placeholder="Car Make or Model" />
                         </div>
-                        <div class="col-md-3">
-                            <select name="city_id" class="form-select">
-                                <option value="">Select City</option>
+                        <div class="search-input-group">
+                            <select name="city_id" class="search-select">
+                                <option value="">All Cities</option>
                                 @foreach($cities as $city)
                                 <option value="{{ $city->id }}">{{ $city->name }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-3">
-                            <select name="price_range" class="form-select">
-                                <option value="">Select Price Range</option>
+                        <div class="search-input-group">
+                            <select name="price_range" class="search-select">
+                                <option value="">All Prices</option>
                                 <option value="0-500000">Under 5 Lac</option>
                                 <option value="500000-1500000">5 - 15 Lac</option>
                                 <option value="1500000-3000000">15 - 30 Lac</option>
@@ -35,11 +35,9 @@
                                 <option value="6000000-999999999">Above 60 Lac</option>
                             </select>
                         </div>
-                        <div class="col-md-2">
-                            <button class="search-btn" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
+                        <button class="search-submit-btn" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </form>
                 </div>
             </div>
