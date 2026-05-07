@@ -173,54 +173,59 @@
     {{-- FOOTER --}}
     <footer style="padding: 40px 0 20px;">
         <div class="container">
-            <div class="row g-4">
+            <div class="row g-4 align-items-start">
 
                 {{-- Column 1: Brand --}}
-                <div class="col-lg-4 mb-4 mb-lg-0">
-                    <a href="{{ route('home') }}" class="footer-logo mb-3 text-decoration-none d-flex align-items-center">
-                        <div class="logo me-2"><i class="fas fa-car text-white"></i></div>
-                        <span class="h4 mb-0 fw-bold text-white">{{ setting('site_name', 'SM-Autos') }}</span>
-                    </a>
-                    <p class="text-white opacity-75 mb-0" style="max-width: 90%;">
-                        {{ setting('footer_about', "Pakistan's #1 platform for buying and selling vehicles.") }}
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-logo mb-3 d-flex align-items-center">
+                        <div class="logo me-2" style="width:32px; height:32px; font-size:1rem"><i class="fas fa-car text-white"></i></div>
+                        <span class="h5 mb-0 fw-bold text-white">{{ setting('site_name', 'SM-Autos') }}</span>
+                    </div>
+                    <p class="text-white opacity-75 small mb-0">
+                        {{ setting('footer_about', "Pakistan's #1 platform for buying and selling vehicles. Find your dream car or bike today!") }}
                     </p>
                 </div>
 
                 {{-- Column 2: Contact Us --}}
-                <div class="col-lg-4 col-md-6">
-                    <h5 class="mb-3">Contact Us</h5>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="fw-bold text-white mb-3">Contact Us</h5>
                     <ul class="list-unstyled mb-0">
                         <li class="mb-2">
-                            <a href="tel:{{ setting('site_phone', '923096527842') }}" class="d-flex align-items-center gap-2 text-white-brand text-decoration-none footer-contact-link">
+                            <a href="tel:{{ setting('site_phone', '923096527842') }}" class="d-flex align-items-center gap-2 text-white-brand text-decoration-none footer-contact-link small">
                                 <i class="fas fa-phone-alt" style="color:{{ setting('primary_color', '#e63946') }}; width:16px"></i>
                                 {{ setting('site_phone', '+92 309 6527842') }}
                             </a>
                         </li>
                         <li class="mb-2">
-                            <a href="mailto:{{ setting('site_email', 'info@sm-autos.com') }}" class="d-flex align-items-center gap-2 text-white-brand text-decoration-none footer-contact-link">
+                            <a href="mailto:{{ setting('site_email', 'info@sm-autos.com') }}" class="d-flex align-items-center gap-2 text-white-brand text-decoration-none footer-contact-link small">
                                 <i class="fas fa-envelope" style="color:{{ setting('primary_color', '#e63946') }}; width:16px"></i>
                                 {{ setting('site_email', 'info@sm-autos.com') }}
                             </a>
                         </li>
-                        <li class="d-flex align-items-center gap-2 text-white-brand">
+                        <li class="d-flex align-items-center gap-2 text-white-brand small">
                             <i class="fas fa-map-marker-alt" style="color:{{ setting('primary_color', '#e63946') }}; width:16px"></i>
                             {{ setting('site_address', 'Lahore, Punjab, Pakistan') }}
                         </li>
                     </ul>
                 </div>
 
-                {{-- Column 3: Links & Social --}}
-                <div class="col-lg-4 col-md-6 text-lg-end">
-                    <h5 class="mb-3">Quick Links</h5>
-                    <div class="mb-4">
-                        <a href="{{ route('items.search', ['category' => 'new-bikes']) }}" class="footer-link d-inline-block ms-lg-3">New Bikes</a>
-                        <a href="{{ route('items.search', ['category' => 'used-bikes']) }}" class="footer-link d-inline-block ms-lg-3">Used Bikes</a>
-                        <a href="{{ route('items.search', ['category' => 'new-cars']) }}" class="footer-link d-inline-block ms-lg-3">New Cars</a>
-                        <a href="{{ route('items.search', ['category' => 'used-cars']) }}" class="footer-link d-inline-block ms-lg-3">Used Cars</a>
-                    </div>
-                    <div class="social-links justify-content-lg-end mt-2">
+                {{-- Column 3: Quick Links --}}
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="fw-bold text-white mb-3">Quick Links</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li><a href="{{ route('items.search', ['category' => 'new-bikes']) }}" class="footer-link small mb-1">New Bikes</a></li>
+                        <li><a href="{{ route('items.search', ['category' => 'used-bikes']) }}" class="footer-link small mb-1">Used Bikes</a></li>
+                        <li><a href="{{ route('items.search', ['category' => 'new-cars']) }}" class="footer-link small mb-1">New Cars</a></li>
+                        <li><a href="{{ route('items.search', ['category' => 'used-cars']) }}" class="footer-link small mb-1">Used Cars</a></li>
+                    </ul>
+                </div>
+
+                {{-- Column 4: Follow Us --}}
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="fw-bold text-white mb-3">Follow Us</h5>
+                    <div class="social-links">
                         <a href="{{ setting('youtube_url', '#') }}" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="{{ setting('instagram_url', '#') }}" aria-label="Instagram"><i class="fab fa-instagram :"></i></a>
+                        <a href="{{ setting('instagram_url', '#') }}" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         <a href="{{ setting('facebook_url', '#') }}" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                         <a href="{{ setting('tiktok_url', '#') }}" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
                     </div>

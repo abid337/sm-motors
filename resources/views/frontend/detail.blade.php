@@ -90,7 +90,7 @@
                     </div>
 
                     {{-- Title --}}
-                    <h2 class="fw-bold mb-2">{{ $item->title }}</h2>
+                    <h2 class="fw-bold mb-2 text-white">{{ $item->title }}</h2>
 
                     {{-- Price --}}
                     <div class="detail-price mb-3">
@@ -100,13 +100,13 @@
                     {{-- Location & Category --}}
                     <div class="d-flex gap-3 mb-4 flex-wrap">
                         @if($item->city)
-                        <span class="text-white-brand">
+                        <span class="text-white fw-bold">
                             <i class="fas fa-map-marker-alt text-red me-1"></i>
                             {{ $item->city->name }}
                         </span>
                         @endif
                         @if($item->category)
-                        <span class="text-white-brand">
+                        <span class="text-white fw-bold">
                             <i class="fas fa-tag text-red me-1"></i>
                             {{ $item->category->name }}
                         </span>
@@ -127,7 +127,7 @@
 
                     {{-- Description --}}
                     @if($item->description)
-                    <p class="text-white-brand mb-0">{{ $item->description }}</p>
+                    <p class="text-white opacity-75 mb-0">{{ $item->description }}</p>
                     @endif
 
                 </div>
