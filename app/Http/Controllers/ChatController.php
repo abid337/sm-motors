@@ -12,36 +12,42 @@ class ChatController extends Controller
         $request->validate([
             'message' => 'required|string'
         ]);
+
         try {
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . env('OPENROUTER_API_KEY'),
                 'Content-Type' => 'application/json',
                 'HTTP-Referer' => config('app.url'),
                 'X-Title' => 'SM-Autos Chatbot',
-            ])->timeout(30)->post('https://openrouter.ai/api/v1/chat/completions', [
-                'model' => 'meta-llama/llama-3.3-70b-instruct:free',
-                'messages' => [
-                    ['role' => 'system', 'content' => 'You are SM-Autos vehicle assistant. Be polite and helpful.'],
-                    ['role' => 'user', 'content' => $request->message]
-                ]
-            ]);
+            ])->timeout(45)
+                ->post('https://openrouter.ai/api/v1/chat/completions', [
+                    'model' => 'meta-llama/llama-3.3-70b-instruct:free',
+                    'messages' => [
+                        ['role' => 'system', 'content' => 'You are SM-Autos vehicle assistant. Be polite and helpful.'],
+                        ['role' => 'user', 'content' => $request->message]
+                    ]
+                ]);
 
             if ($response->successful()) {
                 $data = $response->json();
+
+
+                $botReply = $data['choices'][0]['message']['content'] ?? 'Sorry, I could not generate a response.';
+
                 return response()->json([
                     'success' => true,
-                    'reply' => $data['choices'][0]['message']['content'] ?? 'Sorry, I could not generate a response.'
+                    'reply' => $botReply
                 ]);
             }
 
             return response()->json([
                 'success' => false,
-                'reply' => 'Connection issue. Please try again later.'
+                'reply' => 'OpenRouter API Error: ' . ($response->json()['error']['message'] ?? 'Unknown Error')
             ], $response->status());
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'reply' => 'Something went wrong: ' . $e->getMessage()
+                'reply' => 'Server Error: ' . $e->getMessage()
             ], 500);
         }
     }

@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>@yield('title', setting('site_name', 'SM-Autos') . (setting('site_tagline') ? ' - ' . setting('site_tagline') : ' - Buy & Sell Vehicles'))</title>
 
     {{-- Google Fonts --}}
