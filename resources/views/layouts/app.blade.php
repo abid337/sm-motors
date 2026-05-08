@@ -31,48 +31,30 @@
     list($r, $g, $b) = sscanf($primary, "#%02x%02x%02x");
     $primaryRGB = "$r, $g, $b";
     @endphp
-    <style>
-        :root {
-            --primary: {
-                    {
-                    $primary
-                }
-            }
+   <style>
+    :root {
+        --primary: {{ $primary }};
+        --primary-rgb: {{ $primaryRGB }};
+        --font: 'Outfit', sans-serif;
+    }
 
-            ;
+    .navbar {
+        background-color: {{ $secondary }} !important;
+    }
 
-            --primary-rgb: {
-                    {
-                    $primaryRGB
-                }
-            }
+    .btn-danger,
+    .logo {
+        background-color: var(--primary) !important;
+        border-color: var(--primary) !important;
+    }
 
-            ;
-            --font: 'Outfit',
-            sans-serif;
-        }
+    .text-danger,
+    .text-red {
+        color: var(--primary) !important;
+    }
+</style>
 
-        .navbar {
-            background-color: {
-                    {
-                    $secondary
-                }
-            }
 
-            !important;
-        }
-
-        .btn-danger,
-        .logo {
-            background-color: var(--primary) !important;
-            border-color: var(--primary) !important;
-        }
-
-        .text-danger,
-        .text-red {
-            color: var(--primary) !important;
-        }
-    </style>
 
     @stack('styles')
 </head>
