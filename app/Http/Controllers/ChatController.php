@@ -21,7 +21,8 @@ class ChatController extends Controller
                 'X-Title' => 'SM-Autos Chatbot',
             ])->timeout(45)
                 ->post('https://openrouter.ai/api/v1/chat/completions', [
-                    'model' => 'google/gemini-2.0-flash-lite-preview-02-05:free',
+
+                    'model' => 'meta-llama/llama-3.1-8b-instruct:free',
                     'messages' => [
                         ['role' => 'system', 'content' => 'You are SM-Autos vehicle assistant. Be polite and helpful.'],
                         ['role' => 'user', 'content' => $request->message]
@@ -40,9 +41,11 @@ class ChatController extends Controller
                 ]);
             }
 
+
+            $errorData = $response->json();
             return response()->json([
                 'success' => false,
-                'reply' => 'OpenRouter API Error: ' . ($response->json()['error']['message'] ?? 'Unknown Error')
+                'reply' => 'Chat Error: ' . ($errorData['error']['message'] ?? 'Provider issue')
             ], $response->status());
         } catch (\Exception $e) {
             return response()->json([
