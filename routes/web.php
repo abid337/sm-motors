@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\PropertyTemplateController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\UserItemController;
+use App\Http\Controllers\ChatController;
 
 // ─────────────────────────────
 // FRONTEND ROUTES
@@ -114,3 +115,6 @@ Route::prefix('admin')
         Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
         Route::put('settings', [SettingsController::class, 'update'])->name('settings.update');
     });
+
+    // OpenRouterAPI Key route 
+    Route::post('/chat', [ChatController::class, 'reply']);

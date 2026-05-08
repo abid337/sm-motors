@@ -31,13 +31,33 @@
     @endphp
     <style>
         :root {
-            --primary: {{ $primary }};
-            --primary-rgb: {{ $primaryRGB }};
-            --font: 'Outfit', sans-serif;
+            --primary: {
+                    {
+                    $primary
+                }
+            }
+
+            ;
+
+            --primary-rgb: {
+                    {
+                    $primaryRGB
+                }
+            }
+
+            ;
+            --font: 'Outfit',
+            sans-serif;
         }
 
         .navbar {
-            background-color: {{ $secondary }} !important;
+            background-color: {
+                    {
+                    $secondary
+                }
+            }
+
+            !important;
         }
 
         .btn-danger,
@@ -321,8 +341,8 @@
         chatbotToggle.addEventListener('click', function(e) {
             e.preventDefault();
             chatWindow.classList.toggle('show');
-            
-            if(chatWindow.classList.contains('show')) {
+
+            if (chatWindow.classList.contains('show')) {
                 showTyping();
                 setTimeout(() => {
                     hideTyping();
@@ -346,20 +366,41 @@
             userMsg.className = 'chat-msg user';
             userMsg.innerHTML = `<p>${text}</p>`;
             chatBody.insertBefore(userMsg, typingIndicator);
-            
+
             chatInput.value = '';
             scrollToBottom();
 
-            // Simulate Bot Response
+            //  AI Response
             showTyping();
-            setTimeout(() => {
-                hideTyping();
-                const botMsg = document.createElement('div');
-                botMsg.className = 'chat-msg bot';
-                botMsg.innerHTML = `<p>Thanks for your message! Our team will get back to you soon.</p>`;
-                chatBody.insertBefore(botMsg, typingIndicator);
-                scrollToBottom();
-            }, 2000);
+            scrollToBottom();
+
+            fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({
+                        message: text
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    hideTyping();
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'chat-msg bot';
+                    botMsg.innerHTML = `<p>${data.reply}</p>`;
+                    chatBody.insertBefore(botMsg, typingIndicator);
+                    scrollToBottom();
+                })
+                .catch(() => {
+                    hideTyping();
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'chat-msg bot';
+                    botMsg.innerHTML = `<p>Network error! Please try again.</p>`;
+                    chatBody.insertBefore(botMsg, typingIndicator);
+                    scrollToBottom();
+                });
         }
 
         sendBtn.addEventListener('click', sendMessage);
@@ -367,9 +408,17 @@
             if (e.key === 'Enter') sendMessage();
         });
 
-        function showTyping() { typingIndicator.style.display = 'flex'; }
-        function hideTyping() { typingIndicator.style.display = 'none'; }
-        function scrollToBottom() { chatBody.scrollTop = chatBody.scrollHeight; }
+        function showTyping() {
+            typingIndicator.style.display = 'flex';
+        }
+
+        function hideTyping() {
+            typingIndicator.style.display = 'none';
+        }
+
+        function scrollToBottom() {
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
 
         // Auto dismiss alerts
         setTimeout(function() {
