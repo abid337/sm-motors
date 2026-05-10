@@ -21,18 +21,18 @@ class ChatController extends Controller
                 'X-Title' => 'SM-Autos Chatbot',
             ])->timeout(45)
                 ->post('https://openrouter.ai/api/v1/chat/completions', [
-
-                    'model' => 'google/gemini-3.1-flash-lite-preview',
+                    
+                    'model' => 'google/gemini-3.1-flash-lite-preview', 
                     'messages' => [
                         ['role' => 'system', 'content' => 'You are SM-Autos vehicle assistant. Be polite and helpful.'],
                         ['role' => 'user', 'content' => $request->message]
-                    ]
+                    ],
+                    
+                    'max_tokens' => 500 
                 ]);
 
             if ($response->successful()) {
                 $data = $response->json();
-
-
                 $botReply = $data['choices'][0]['message']['content'] ?? 'Sorry, I could not generate a response.';
 
                 return response()->json([
@@ -41,12 +41,12 @@ class ChatController extends Controller
                 ]);
             }
 
-
             $errorData = $response->json();
             return response()->json([
                 'success' => false,
                 'reply' => 'Chat Error: ' . ($errorData['error']['message'] ?? 'Provider issue')
             ], $response->status());
+            
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
