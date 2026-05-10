@@ -19,9 +19,16 @@ class VehicleContextBuilder
             ->where('status', 'published');
 
         if ($searchTerm) {
-            $query->where(function($q) use ($searchTerm) {
-                $q->where('title', 'LIKE', "%{$searchTerm}%")
-                  ->orWhere('description', 'LIKE', "%{$searchTerm}%");
+            $keywords = explode(' ', $searchTerm);
+            $query->where(function($q) use ($keywords) {
+                foreach ($keywords as $word) {
+                    if (strlen($word) > 1) {
+                        $q->where(function($sq) use ($word) {
+                            $sq->where('title', 'LIKE', "%{$word}%")
+                               ->orWhere('description', 'LIKE', "%{$word}%");
+                        });
+                    }
+                }
             });
         }
 

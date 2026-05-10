@@ -55,13 +55,13 @@ class SalesmanAgent
      */
     protected function extractSearchTerm(string $input): ?string
     {
-        // Remove common words and return the core keywords
+        // Remove common filler words and return the core keywords
         $input = strtolower($input);
-        $ignore = ['do', 'you', 'have', 'the', 'in', 'is', 'best', 'cheapest', 'for', 'me', 'which', 'model', 'any'];
+        $ignore = ['do', 'you', 'have', 'the', 'in', 'is', 'best', 'cheapest', 'for', 'me', 'which', 'model', 'any', 'tell', 'about', 'show'];
         $words = explode(' ', $input);
-        $keywords = array_filter($words, fn($w) => !in_array($w, $ignore) && strlen($w) > 2);
+        $keywords = array_filter($words, fn($w) => !in_array($w, $ignore) && strlen($w) > 1);
         
-        return !empty($keywords) ? implode(' ', array_slice($keywords, 0, 2)) : null;
+        return !empty($keywords) ? implode(' ', array_slice($keywords, 0, 4)) : null;
     }
 
     /**
