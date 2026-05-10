@@ -119,5 +119,5 @@ Route::prefix('admin')
 
     // OpenRouterAPI Key route 
     // Advanced AI Chat Routes
-    Route::post('/chat', [AIChatController::class, 'message']);
-    Route::post('/chat/reset', [AIChatController::class, 'reset']);
+    Route::post('/chat', [AIChatController::class, 'message'])->name('chat.message');
+    Route::post('/chat/reset', [AIChatController::class, 'reset'])->name('chat.reset');

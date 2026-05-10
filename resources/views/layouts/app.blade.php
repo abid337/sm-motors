@@ -358,7 +358,7 @@
             showTyping();
             scrollToBottom();
 
-            fetch('/chat', {
+            fetch('{{ route('chat.message') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
