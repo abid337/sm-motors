@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ChatbotService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class ChatController extends Controller
 {
-    public function reply(Request $request, ChatbotService $chatbotService)
+    public function reply(Request $request)
     {
         $request->validate([
             'message' => 'required|string'
@@ -22,15 +21,15 @@ class ChatController extends Controller
                 'X-Title' => 'SM-Autos Chatbot',
             ])->timeout(45)
                 ->post('https://openrouter.ai/api/v1/chat/completions', [
+
                     'model' => 'openrouter/auto',
                     'messages' => [
-                        ['role' => 'system', 'content' => $chatbotService->getSystemPrompt()],
+                        ['role' => 'system', 'content' => 'You are SM-Autos vehicle assistant. Be polite and helpful.'],
                         ['role' => 'user', 'content' => $request->message]
                     ]
                 ]);
 
             if ($response->successful()) {
-
                 $data = $response->json();
 
 
