@@ -29,7 +29,7 @@ return [
     'persona' => [
         'name' => 'SM Autos Sales Assistant',
         'tone' => 'professional, helpful, persuasive',
-        'max_tokens' => 1000,
+        'max_tokens' => 500,
         'temperature' => 0.7,
     ],
 
