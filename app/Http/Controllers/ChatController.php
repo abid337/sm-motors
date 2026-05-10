@@ -22,7 +22,7 @@ class ChatController extends Controller
             ])->timeout(45)
                 ->post('https://openrouter.ai/api/v1/chat/completions', [
 
-                   'model' => 'meta-llama/llama-3.2-3b-instruct:free',
+                   'model' => 'openrouter/auto',
                     'messages' => [
                         ['role' => 'system', 'content' => 'You are SM-Autos vehicle assistant. Be polite and helpful.'],
                         ['role' => 'user', 'content' => $request->message]
