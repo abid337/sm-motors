@@ -27,10 +27,13 @@ class SalesmanAgent
      */
     public function chat(string $userInput, array $history = []): ChatResponseDTO
     {
-        // Extract potential search term (first 2-3 words of the query)
+        // Extract potential search term
         $searchTerm = $this->extractSearchTerm($userInput);
         
-        $inventoryContext = $this->contextBuilder->buildInventoryContext($searchTerm);
+        // Extract city if mentioned
+        $cityName = $this->extractCity($userInput);
+        
+        $inventoryContext = $this->contextBuilder->buildInventoryContext($searchTerm, $cityName);
         $generalKnowledge = $this->knowledgeLoader->getGeneralKnowledge();
         
         $systemPrompt = $this->promptManager->getSystemPrompt($inventoryContext, $generalKnowledge);
@@ -62,6 +65,23 @@ class SalesmanAgent
         $keywords = array_filter($words, fn($w) => !in_array($w, $ignore) && strlen($w) > 1);
         
         return !empty($keywords) ? implode(' ', array_slice($keywords, 0, 4)) : null;
+    }
+
+    /**
+     * Extract city name from user input by matching against database cities.
+     */
+    protected function extractCity(string $input): ?string
+    {
+        $input = strtolower($input);
+        $cities = \App\Models\City::pluck('name')->toArray();
+
+        foreach ($cities as $city) {
+            if (str_contains($input, strtolower($city))) {
+                return $city;
+            }
+        }
+
+        return null;
     }
 
     /**

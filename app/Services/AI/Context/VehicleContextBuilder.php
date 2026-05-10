@@ -10,12 +10,9 @@ class VehicleContextBuilder
 {
     /**
      * Build the inventory context for the AI.
-     *
-     * @return string
-     */
-    public function buildInventoryContext(?string $searchTerm = null): string
+    public function buildInventoryContext(?string $searchTerm = null, ?string $cityName = null): string
     {
-        $query = Item::with(['category', 'properties'])
+        $query = Item::with(['category', 'properties', 'city'])
             ->where('status', 'published');
 
         if ($searchTerm) {
@@ -29,6 +26,12 @@ class VehicleContextBuilder
                         });
                     }
                 }
+            });
+        }
+
+        if ($cityName) {
+            $query->whereHas('city', function($q) use ($cityName) {
+                $q->where('name', 'LIKE', "%{$cityName}%");
             });
         }
 
@@ -57,6 +60,7 @@ class VehicleContextBuilder
                 condition: $item->condition,
                 price: (float) $item->price,
                 category: $item->category->name ?? 'Vehicle',
+                city: $item->city->name ?? 'Unknown',
                 properties: $item->properties->pluck('value', 'key')->toArray(),
                 url: route('items.show', $item->slug)
             );

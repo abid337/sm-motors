@@ -10,6 +10,7 @@ class VehicleInfoDTO
         public readonly string $condition,
         public readonly float $price,
         public readonly string $category,
+        public readonly string $city,
         public readonly array $properties,
         public readonly string $url
     ) {}
@@ -20,6 +21,6 @@ class VehicleInfoDTO
             ->map(fn($v, $k) => "{$k}: {$v}")
             ->implode(', ');
 
-        return "Vehicle: {$this->title} | Condition: {$this->condition} | Price: {$this->price} | Category: {$this->category} | Specs: [{$props}] | Details: {$this->url}";
+        return "Vehicle: {$this->title} | City: {$this->city} | Condition: {$this->condition} | Price: {$this->price} | Category: {$this->category} | Specs: [{$props}] | Details: {$this->url}";
     }
 }

@@ -15,20 +15,38 @@ class DealershipKnowledgeLoader
     {
         $settings = SiteSetting::getAllSettings();
         $categories = Category::pluck('name')->toArray();
-
+        $citiesCount = \App\Models\City::count();
+        $totalItems = \App\Models\Item::where('status', 'published')->count();
+        $featuredItems = \App\Models\Item::where('status', 'published')->where('featured', true)->count();
+        
         $siteName = $settings['site_name'] ?? 'SM Autos';
         $siteAddress = $settings['site_address'] ?? $settings['address'] ?? 'Not specified';
         $sitePhone = $settings['site_phone'] ?? $settings['phone'] ?? 'Not specified';
         $siteEmail = $settings['site_email'] ?? $settings['email'] ?? 'Not specified';
         
-        $knowledge = "DEALERSHIP OVERVIEW (LIVE DATA):\n";
-        $knowledge .= "- Name: {$siteName}\n";
-        $knowledge .= "- Available Sections/Categories: " . implode(', ', $categories) . "\n";
-        $knowledge .= "- Contact Address: {$siteAddress}\n";
-        $knowledge .= "- Phone: {$sitePhone}\n";
-        $knowledge .= "- Email: {$siteEmail}\n";
+        $knowledge = "DEALERSHIP DASHBOARD OVERVIEW (LIVE DATA):\n";
+        $knowledge .= "- Site Name: {$siteName}\n";
+        $knowledge .= "- Total Inventory: {$totalItems} published items\n";
+        $knowledge .= "- Featured Stock: {$featuredItems} premium units\n";
+        $knowledge .= "- Coverage: {$citiesCount} cities across Pakistan\n";
+        $knowledge .= "- Categories: " . implode(', ', $categories) . "\n";
+        $knowledge .= "- Contact: {$siteAddress} | {$sitePhone} | {$siteEmail}\n";
 
-        // Check if there are any specific about or policy settings
+        // Category Breakdown
+        $breakdown = \App\Models\Item::where('status', 'published')
+            ->with('category')
+            ->get()
+            ->groupBy('category.name')
+            ->map->count();
+            
+        if ($breakdown->isNotEmpty()) {
+            $knowledge .= "- Inventory Breakdown: ";
+            foreach ($breakdown as $name => $count) {
+                $knowledge .= "{$name} ({$count}), ";
+            }
+            $knowledge = rtrim($knowledge, ', ') . "\n";
+        }
+
         if (isset($settings['about_us'])) {
             $knowledge .= "- About Us: " . $settings['about_us'] . "\n";
         }
