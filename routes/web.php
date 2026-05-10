@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\UserItemController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\Api\AIChatController;
 
 // ─────────────────────────────
 // FRONTEND ROUTES
@@ -117,4 +118,6 @@ Route::prefix('admin')
     });
 
     // OpenRouterAPI Key route 
-    Route::post('/chat', [ChatController::class, 'reply']);
+    // Advanced AI Chat Routes
+    Route::post('/chat', [AIChatController::class, 'message']);
+    Route::post('/chat/reset', [AIChatController::class, 'reset']);
