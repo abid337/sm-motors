@@ -4,6 +4,7 @@ namespace App\Services\AI\Knowledge;
 
 use App\Models\SiteSetting;
 use App\Models\Category;
+use App\Models\Item;
 use Illuminate\Support\Facades\File;
 
 class DealershipKnowledgeLoader
@@ -33,11 +34,11 @@ class DealershipKnowledgeLoader
         $knowledge .= "- Contact: {$siteAddress} | {$sitePhone} | {$siteEmail}\n";
 
         // Category Breakdown
-        $breakdown = \App\Models\Item::where('status', 'published')
-            ->with('category')
-            ->get()
-            ->groupBy('category.name')
-            ->map->count();
+        $breakdown = Item::join('categories', 'items.category_id', '=', 'categories.id')
+            ->where('items.status', 'published')
+            ->select('categories.name', \DB::raw('count(*) as total'))
+            ->groupBy('categories.name')
+            ->pluck('total', 'name');
             
         if ($breakdown->isNotEmpty()) {
             $knowledge .= "- Inventory Breakdown: ";

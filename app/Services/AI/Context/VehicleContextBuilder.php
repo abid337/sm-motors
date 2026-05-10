@@ -38,7 +38,11 @@ class VehicleContextBuilder
         $vehicles = $query->limit(20)->get();
 
         $activeCount = Item::where('status', 'published')->count();
-        $categoriesCount = Item::where('status', 'published')->with('category')->get()->groupBy('category.name')->map->count();
+        $categoriesCount = Item::join('categories', 'items.category_id', '=', 'categories.id')
+            ->where('items.status', 'published')
+            ->select('categories.name', \DB::raw('count(*) as total'))
+            ->groupBy('categories.name')
+            ->pluck('total', 'name');
 
         $context = "CURRENT LIVE INVENTORY STATUS:\n";
         $context .= "- Total active items across all categories: {$activeCount}\n";
