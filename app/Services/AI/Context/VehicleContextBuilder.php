@@ -13,15 +13,22 @@ class VehicleContextBuilder
      *
      * @return string
      */
-    public function buildInventoryContext(): string
+    public function buildInventoryContext(?string $searchTerm = null): string
     {
-        $vehicles = Item::with(['category', 'properties'])
-            ->where('status', 'active')
-            ->limit(20) // Limit to top 20 to keep prompt window manageable
-            ->get();
+        $query = Item::with(['category', 'properties'])
+            ->where('status', 'published');
 
-        $activeCount = Item::where('status', 'active')->count();
-        $categoriesCount = Item::where('status', 'active')->with('category')->get()->groupBy('category.name')->map->count();
+        if ($searchTerm) {
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('title', 'LIKE', "%{$searchTerm}%")
+                  ->orWhere('description', 'LIKE', "%{$searchTerm}%");
+            });
+        }
+
+        $vehicles = $query->limit(20)->get();
+
+        $activeCount = Item::where('status', 'published')->count();
+        $categoriesCount = Item::where('status', 'published')->with('category')->get()->groupBy('category.name')->map->count();
 
         $context = "CURRENT LIVE INVENTORY STATUS:\n";
         $context .= "- Total active items across all categories: {$activeCount}\n";

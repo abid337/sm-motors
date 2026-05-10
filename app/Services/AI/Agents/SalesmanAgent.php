@@ -27,7 +27,10 @@ class SalesmanAgent
      */
     public function chat(string $userInput, array $history = []): ChatResponseDTO
     {
-        $inventoryContext = $this->contextBuilder->buildInventoryContext();
+        // Extract potential search term (first 2-3 words of the query)
+        $searchTerm = $this->extractSearchTerm($userInput);
+        
+        $inventoryContext = $this->contextBuilder->buildInventoryContext($searchTerm);
         $generalKnowledge = $this->knowledgeLoader->getGeneralKnowledge();
         
         $systemPrompt = $this->promptManager->getSystemPrompt($inventoryContext, $generalKnowledge);
@@ -45,6 +48,20 @@ class SalesmanAgent
             reply: $reply,
             isLeadGenerated: $this->detectLeadIntent($reply, $userInput)
         );
+    }
+
+    /**
+     * Extract a potential vehicle name or keyword from user input.
+     */
+    protected function extractSearchTerm(string $input): ?string
+    {
+        // Remove common words and return the core keywords
+        $input = strtolower($input);
+        $ignore = ['do', 'you', 'have', 'the', 'in', 'is', 'best', 'cheapest', 'for', 'me', 'which', 'model', 'any'];
+        $words = explode(' ', $input);
+        $keywords = array_filter($words, fn($w) => !in_array($w, $ignore) && strlen($w) > 2);
+        
+        return !empty($keywords) ? implode(' ', array_slice($keywords, 0, 2)) : null;
     }
 
     /**
