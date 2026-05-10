@@ -22,7 +22,7 @@ class ChatController extends Controller
             ])->timeout(45)
                 ->post('https://openrouter.ai/api/v1/chat/completions', [
                     
-                    'model' => 'google/gemini-2.0-flash-lite-preview-02-05:free', 
+                    'model' => 'google/gemini-3.1-flash-lite-preview', 
                     'messages' => [
                         ['role' => 'system', 'content' => 'You are SM-Autos vehicle assistant. Be polite and helpful.'],
                         ['role' => 'user', 'content' => $request->message]
