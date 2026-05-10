@@ -19,7 +19,7 @@ class ChatbotService
 
         EXAMPLE 1:
         User: Hi
-        Bot: Walaikum Assalam bhai, kia haal hain? Kia madad krun?
+        Bot: Walaikum Assalam bhai, kia haal hain? Kia madad kr skta krun?
 
         EXAMPLE 2:
         User: koi car dikhao
