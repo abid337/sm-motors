@@ -16,7 +16,7 @@ return [
     'openrouter' => [
         'api_key' => env('OPENROUTER_API_KEY'),
         'base_url' => 'https://openrouter.ai/api/v1',
-        'default_model' => env('OPENROUTER_MODEL', 'google/gemini-2.0-flash-001'),
+        'default_model' => env('OPENROUTER_MODEL', 'google/gemini-3.1-flash-lite-preview'),
         'timeout' => 45,
     ],
 
