@@ -22,7 +22,7 @@ class ChatController extends Controller
                 'X-Title' => 'SM-Autos Chatbot',
             ])->timeout(45)
                 ->post('https://openrouter.ai/api/v1/chat/completions', [
-                    'model' => 'meta-llama/llama-3-8b-instruct:free',
+                    'model' => 'openrouter/auto',
                     'messages' => [
                         ['role' => 'system', 'content' => $chatbotService->getSystemPrompt()],
                         ['role' => 'user', 'content' => $request->message]
