@@ -34,9 +34,9 @@ class DealershipKnowledgeLoader
         $knowledge .= "- Contact: {$siteAddress} | {$sitePhone} | {$siteEmail}\n";
 
         // Category Breakdown
-        $breakdown = Item::join('categories', 'items.category_id', '=', 'categories.id')
+        $breakdown = Item::leftJoin('categories', 'items.category_id', '=', 'categories.id')
             ->where('items.status', 'published')
-            ->select('categories.name', \DB::raw('count(*) as total'))
+            ->select('categories.name', \Illuminate\Support\Facades\DB::raw('count(*) as total'))
             ->groupBy('categories.name')
             ->pluck('total', 'name');
             

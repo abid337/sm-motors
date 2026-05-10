@@ -38,9 +38,9 @@ class VehicleContextBuilder
         $vehicles = $query->limit(20)->get();
 
         $activeCount = Item::where('status', 'published')->count();
-        $categoriesCount = Item::join('categories', 'items.category_id', '=', 'categories.id')
+        $categoriesCount = Item::leftJoin('categories', 'items.category_id', '=', 'categories.id')
             ->where('items.status', 'published')
-            ->select('categories.name', \DB::raw('count(*) as total'))
+            ->select('categories.name', \Illuminate\Support\Facades\DB::raw('count(*) as total'))
             ->groupBy('categories.name')
             ->pluck('total', 'name');
 
@@ -66,7 +66,7 @@ class VehicleContextBuilder
                 category: $item->category->name ?? 'Vehicle',
                 city: $item->city->name ?? 'Unknown',
                 properties: $item->properties->pluck('value', 'key')->toArray(),
-                url: route('items.show', $item->slug)
+                url: $item->slug ? route('items.show', $item->slug) : '#'
             );
             
             $context .= "- " . $dto->toContextString() . "\n";
