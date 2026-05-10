@@ -7,12 +7,15 @@ use App\Services\AI\Prompts\SalesPromptManager;
 use App\Services\AI\Context\VehicleContextBuilder;
 use App\Services\AI\DTOs\ChatResponseDTO;
 
+use App\Services\AI\Knowledge\DealershipKnowledgeLoader;
+
 class SalesmanAgent
 {
     public function __construct(
         protected AIProviderInterface $provider,
         protected SalesPromptManager $promptManager,
-        protected VehicleContextBuilder $contextBuilder
+        protected VehicleContextBuilder $contextBuilder,
+        protected DealershipKnowledgeLoader $knowledgeLoader
     ) {}
 
     /**
@@ -25,7 +28,9 @@ class SalesmanAgent
     public function chat(string $userInput, array $history = []): ChatResponseDTO
     {
         $inventoryContext = $this->contextBuilder->buildInventoryContext();
-        $systemPrompt = $this->promptManager->getSystemPrompt($inventoryContext);
+        $generalKnowledge = $this->knowledgeLoader->getGeneralKnowledge();
+        
+        $systemPrompt = $this->promptManager->getSystemPrompt($inventoryContext, $generalKnowledge);
 
         $messages = array_merge(
             [['role' => 'system', 'content' => $systemPrompt]],

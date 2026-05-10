@@ -20,11 +20,21 @@ class VehicleContextBuilder
             ->limit(20) // Limit to top 20 to keep prompt window manageable
             ->get();
 
-        if ($vehicles->isEmpty()) {
-            return "Currently, there are no vehicles available in our inventory.";
-        }
+        $activeCount = Item::where('status', 'active')->count();
+        $categoriesCount = Item::where('status', 'active')->with('category')->get()->groupBy('category.name')->map->count();
 
-        $context = "AVAILABLE INVENTORY AT SM AUTOS:\n";
+        $context = "CURRENT LIVE INVENTORY STATUS:\n";
+        $context .= "- Total active items across all categories: {$activeCount}\n";
+        
+        if ($categoriesCount->isEmpty()) {
+            $context .= "- No items are currently active in any category.\n";
+        } else {
+            foreach ($categoriesCount as $catName => $count) {
+                $context .= "- {$catName}: {$count} active units\n";
+            }
+        }
+        
+        $context .= "\nDETAILED LIST OF TOP ITEMS:\n";
         
         $vehicles->each(function (Item $item) use (&$context) {
             $dto = new VehicleInfoDTO(
