@@ -10,6 +10,7 @@ class VehicleContextBuilder
 {
     /**
      * Build the inventory context for the AI.
+     */
     public function buildInventoryContext(?string $searchTerm = null, ?string $cityName = null): string
     {
         $query = Item::with(['category', 'properties', 'city'])
