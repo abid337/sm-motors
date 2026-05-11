@@ -23,7 +23,10 @@ class VehicleContextBuilder
                     if (strlen($word) > 1) {
                         $q->where(function($sq) use ($word) {
                             $sq->where('title', 'LIKE', "%{$word}%")
-                               ->orWhere('description', 'LIKE', "%{$word}%");
+                               ->orWhere('description', 'LIKE', "%{$word}%")
+                               ->orWhereHas('category', function($cq) use ($word) {
+                                   $cq->where('name', 'LIKE', "%{$word}%");
+                               });
                         });
                     }
                 }
@@ -36,7 +39,7 @@ class VehicleContextBuilder
             });
         }
 
-        $vehicles = $query->limit(20)->get();
+        $vehicles = $query->latest()->limit(20)->get();
 
         $activeCount = Item::where('status', 'published')->count();
         $categoriesCount = Item::leftJoin('categories', 'items.category_id', '=', 'categories.id')
