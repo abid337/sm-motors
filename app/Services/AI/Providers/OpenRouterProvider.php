@@ -37,16 +37,17 @@ class OpenRouterProvider implements AIProviderInterface
                     'max_tokens' => $options['max_tokens'] ?? config('ai.persona.max_tokens'),
                 ]);
 
-            if ($response->successful()) {
-                return $response->json('choices.0.message.content') ?? '';
+            if (!$response->successful()) {
+                Log::error('OpenRouter API Error', [
+                    'status' => $response->status(),
+                    'response' => $response->json(),
+                ]);
+                
+                $error = $response->json('error.message') ?? $response->body();
+                return "AI Error: " . $error;
             }
 
-            Log::error('OpenRouter API Error', [
-                'status' => $response->status(),
-                'response' => $response->json(),
-            ]);
-
-            return "I'm having trouble connecting to my knowledge base right now. Please try again in a moment.";
+            return $response->json('choices.0.message.content') ?? '';
 
         } catch (\Exception $e) {
             Log::error('OpenRouter Exception', ['message' => $e->getMessage()]);
