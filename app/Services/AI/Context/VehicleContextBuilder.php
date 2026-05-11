@@ -39,7 +39,30 @@ class VehicleContextBuilder
             });
         }
 
-        $vehicles = $query->latest()->limit(20)->get();
+        $vehicles = $query->latest()->limit(50)->get();
+
+        // Fallback: If no results found with strict AND, try a broader OR search
+        if ($searchTerm && $vehicles->isEmpty()) {
+            $query = Item::with(['category', 'properties', 'city'])
+                ->where('status', 'published');
+            
+            if ($cityName) {
+                $query->whereHas('city', fn($q) => $q->where('name', 'LIKE', "%{$cityName}%"));
+            }
+
+            $query->where(function($q) use ($keywords) {
+                foreach ($keywords as $word) {
+                    if (strlen($word) > 1) {
+                        $q->orWhere(function($sq) use ($word) {
+                            $sq->where('title', 'LIKE', "%{$word}%")
+                               ->orWhere('description', 'LIKE', "%{$word}%")
+                               ->orWhereHas('category', fn($cq) => $cq->where('name', 'LIKE', "%{$word}%"));
+                        });
+                    }
+                }
+            });
+            $vehicles = $query->latest()->limit(50)->get();
+        }
 
         $activeCount = Item::where('status', 'published')->count();
         $categoriesCount = Item::leftJoin('categories', 'items.category_id', '=', 'categories.id')

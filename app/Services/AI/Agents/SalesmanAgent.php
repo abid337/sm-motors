@@ -60,7 +60,7 @@ class SalesmanAgent
     {
         // Remove common filler words and return the core keywords
         $input = strtolower($input);
-        $ignore = ['do', 'you', 'have', 'the', 'in', 'is', 'best', 'cheapest', 'for', 'me', 'which', 'model', 'any', 'tell', 'about', 'show'];
+        $ignore = ['do', 'you', 'have', 'the', 'in', 'is', 'best', 'cheapest', 'for', 'me', 'which', 'model', 'any', 'tell', 'about', 'show', 'name', 'price', 'all', 'list', 'and', 'with', 'details'];
         $words = explode(' ', $input);
         $keywords = array_filter($words, fn($w) => !in_array($w, $ignore) && strlen($w) > 1);
         
