@@ -43,8 +43,7 @@ class OpenRouterProvider implements AIProviderInterface
                     'response' => $response->json(),
                 ]);
                 
-                $error = $response->json('error.message') ?? $response->body();
-                return "AI Error: " . $error;
+                return "I'm having trouble connecting to my knowledge base right now. Please try again in a moment.";
             }
 
             return $response->json('choices.0.message.content') ?? '';
