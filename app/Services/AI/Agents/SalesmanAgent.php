@@ -6,7 +6,6 @@ use App\Services\AI\Contracts\AIProviderInterface;
 use App\Services\AI\Prompts\SalesPromptManager;
 use App\Services\AI\Context\VehicleContextBuilder;
 use App\Services\AI\DTOs\ChatResponseDTO;
-
 use App\Services\AI\Knowledge\DealershipKnowledgeLoader;
 
 class SalesmanAgent
@@ -20,22 +19,18 @@ class SalesmanAgent
 
     /**
      * Handle the chat interaction.
-     *
-     * @param string $userInput
-     * @param array $history
-     * @return ChatResponseDTO
      */
     public function chat(string $userInput, array $history = []): ChatResponseDTO
     {
         // Extract potential search term
         $searchTerm = $this->extractSearchTerm($userInput);
-        
+
         // Extract city if mentioned
         $cityName = $this->extractCity($userInput);
-        
+
         $inventoryContext = $this->contextBuilder->buildInventoryContext($searchTerm, $cityName);
         $generalKnowledge = $this->knowledgeLoader->getGeneralKnowledge();
-        
+
         $systemPrompt = $this->promptManager->getSystemPrompt($inventoryContext, $generalKnowledge);
 
         $messages = array_merge(
@@ -58,12 +53,11 @@ class SalesmanAgent
      */
     protected function extractSearchTerm(string $input): ?string
     {
-        // Remove common filler words and return the core keywords
         $input = strtolower($input);
         $ignore = ['do', 'you', 'have', 'the', 'in', 'is', 'best', 'cheapest', 'for', 'me', 'which', 'model', 'any', 'tell', 'about', 'show', 'name', 'price', 'all', 'list', 'and', 'with', 'details'];
         $words = explode(' ', $input);
         $keywords = array_filter($words, fn($w) => !in_array($w, $ignore) && strlen($w) > 1);
-        
+
         return !empty($keywords) ? implode(' ', array_slice($keywords, 0, 4)) : null;
     }
 
@@ -85,15 +79,17 @@ class SalesmanAgent
     }
 
     /**
-     * Simple logic to detect if a lead was likely generated in the conversation.
+     * Detect if user provided contact info in their message.
      */
     protected function detectLeadIntent(string $reply, string $userInput): bool
     {
-        // Check if user provided a phone number or email in their input
-        // Or if the AI confirmed a lead was booked
-        $hasContact = preg_match('/[0-9]{7,15}/', $userInput) || str_contains($userInput, '@');
-        $isConfirming = str_contains(strtolower($reply), 'booked') || str_contains(strtolower($reply), 'consultation');
+        // Check if user provided phone number
+        $hasPhone = (bool) preg_match('/[0-9]{7,15}/', $userInput);
 
-        return $hasContact && $isConfirming;
+        // Check if user provided email
+        $hasEmail = str_contains($userInput, '@');
+
+        // Lead = phone or email provided — that's enough!
+        return $hasPhone || $hasEmail;
     }
 }
