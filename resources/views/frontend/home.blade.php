@@ -13,44 +13,12 @@
         <div class="row justify-content-center">
             <div class="col-lg-9 col-xl-8">
                 <div class="hero-search-wrapper">
-                    <!-- AI Search Form -->
-                    <form id="aiSearchForm" class="mb-4" style="background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 100px; padding: 5px; display: flex; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);">
-                        <div style="flex: 1; display: flex; align-items: center; padding-left: 20px;">
-                            <i class="fas fa-robot text-danger fs-5 me-2"></i>
-                            <input type="text" id="aiSearchInput" class="search-input" placeholder="Ask AI: e.g. Honda Civic in Lahore under 50 lacs" style="text-align: left; padding: 0 10px; width: 100%; outline: none;" />
-                        </div>
-                        <button class="search-submit-btn" type="submit" id="aiSearchBtn" style="border-radius: 50px; padding: 0 25px; display: flex; align-items: center; gap: 8px;">
-                            <span id="aiSearchText">Ask AI</span>
-                            <div class="spinner-border spinner-border-sm text-white d-none" id="aiSearchSpinner" role="status"></div>
-                        </button>
-                    </form>
-
-                    <div class="text-white opacity-50 mb-4 small fw-bold tracking-widest">- OR MANUAL SEARCH -</div>
-
                     <form action="{{ route('items.search') }}" method="GET" class="hero-search-form" id="mainSearchForm">
-                        <div class="search-input-group">
-                            <input type="text" name="keyword" id="searchKeyword" class="search-input" placeholder="Car Make or Model (or ask AI...)" />
+                        <div class="search-input-group" style="flex: 1;">
+                            <input type="text" name="keyword" id="searchKeyword" class="search-input" placeholder="Ask AI: e.g. Civic in Lahore under 50 lacs" style="text-align: left; padding-left: 20px; font-size: 1.1rem;"/>
                         </div>
-                        <div class="search-input-group">
-                            <select name="city_id" id="searchCity" class="search-select">
-                                <option value="">All Cities</option>
-                                @foreach($cities as $city)
-                                <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="search-input-group">
-                            <select name="price_range" id="searchPrice" class="search-select">
-                                <option value="">All Prices</option>
-                                <option value="0-500000">Under 5 Lac</option>
-                                <option value="500000-1500000">5 - 15 Lac</option>
-                                <option value="1500000-3000000">15 - 30 Lac</option>
-                                <option value="3000000-6000000">30 - 60 Lac</option>
-                                <option value="6000000-999999999">Above 60 Lac</option>
-                            </select>
-                        </div>
-                        <button class="search-submit-btn" type="submit" id="searchSubmitBtn">
-                            <i class="fas fa-search" id="searchIcon"></i>
+                        <button class="search-submit-btn" type="submit" id="searchSubmitBtn" style="background: linear-gradient(135deg, #e63946, #c1121f); font-weight: 700; border-radius: 0 50px 50px 0; padding: 0 40px;">
+                            <i class="fas fa-sparkles me-2" id="searchIcon"></i> <span id="searchText">AI Search</span>
                             <div class="spinner-border spinner-border-sm text-white d-none" id="searchSpinner" role="status"></div>
                         </button>
                     </form>

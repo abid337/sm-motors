@@ -413,55 +413,61 @@
         }, 3000);
 
         // Intercept Search Forms for AI Processing
-        function bindAiSearchForm(formId, inputId, btnId, spinnerId, textId) {
+        // Intercept Main Search Forms for AI Processing
+        function bindSmartSearchForm(formId) {
             const form = document.getElementById(formId);
             if (!form) return;
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                const inputEl = document.getElementById(inputId);
-                const text = inputEl ? inputEl.value.trim() : '';
                 
-                if (text.length > 0) {
-                    const btn = document.getElementById(btnId);
-                    const spinner = document.getElementById(spinnerId);
-                    const btnText = document.getElementById(textId);
-                    
-                    if (btnText) btnText.style.display = 'none';
-                    if (spinner) spinner.classList.remove('d-none');
-                    if (btn) btn.disabled = true;
+                const keywordInput = form.querySelector('input[name="keyword"]');
+                const cityInput = form.querySelector('select[name="city_id"]');
+                const priceInput = form.querySelector('select[name="price_range"]');
+                
+                const queryText = keywordInput ? keywordInput.value.trim() : '';
+                const cityId = cityInput ? cityInput.value : '';
+                const priceRange = priceInput ? priceInput.value : '';
+                
+                const submitBtn = form.querySelector('.search-submit-btn');
+                const btnText = submitBtn ? submitBtn.querySelector('span') : null;
+                const spinner = submitBtn ? submitBtn.querySelector('.spinner-border') : null;
+                const icon = submitBtn ? submitBtn.querySelector('i') : null;
+                
+                if (btnText) btnText.style.display = 'none';
+                if (icon) icon.classList.add('d-none');
+                if (spinner) spinner.classList.remove('d-none');
+                if (submitBtn) submitBtn.disabled = true;
 
-                    fetch('/api/ai-search', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                        },
-                        body: JSON.stringify({ query: text })
+                fetch('/api/ai-search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({ 
+                        query: queryText,
+                        city_id: cityId,
+                        price_range: priceRange
                     })
-                    .then(res => res.json())
-                    .then(data => {
-                        if(data.redirect_url) {
-                            window.location.href = data.redirect_url;
-                        } else {
-                            alert('Could not understand query. Try again.');
-                            if (btnText) btnText.style.display = 'inline';
-                            if (spinner) spinner.classList.add('d-none');
-                            if (btn) btn.disabled = false;
-                        }
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        alert('Network error. Try again.');
-                        if (btnText) btnText.style.display = 'inline';
-                        if (spinner) spinner.classList.add('d-none');
-                        if (btn) btn.disabled = false;
-                    });
-                }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.redirect_url) {
+                        window.location.href = data.redirect_url;
+                    } else {
+                        form.submit(); // fallback
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    form.submit(); // fallback
+                });
             });
         }
 
-        bindAiSearchForm('aiSearchForm', 'aiSearchInput', 'aiSearchBtn', 'aiSearchSpinner', 'aiSearchText');
-        bindAiSearchForm('aiSearchFormPage', 'aiSearchInputPage', 'aiSearchBtnPage', 'aiSearchSpinnerPage', 'aiSearchTextPage');
+        bindSmartSearchForm('mainSearchForm');
+        bindSmartSearchForm('mainSearchFormPage');
+
 
     </script>
 
