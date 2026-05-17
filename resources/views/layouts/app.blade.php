@@ -411,6 +411,54 @@
                 bsAlert.close();
             });
         }, 3000);
+
+        // Intercept Search Forms for AI Processing
+        document.querySelectorAll('.hero-search-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                const keywordInput = this.querySelector('input[name="keyword"]');
+                const text = keywordInput ? keywordInput.value.trim() : '';
+                const words = text.split(' ').filter(w => w.length > 0);
+                
+                // If it looks like a natural language query
+                const isNaturalLanguage = words.length >= 3 || text.toLowerCase().includes(' in ') || text.toLowerCase().includes(' under ') || text.toLowerCase().includes(' for ');
+                
+                if (isNaturalLanguage && text.length > 0) {
+                    e.preventDefault();
+                    const submitBtn = this.querySelector('.search-submit-btn');
+                    let icon = null;
+                    let spinner = null;
+                    
+                    if (submitBtn) {
+                        icon = submitBtn.querySelector('i');
+                        spinner = submitBtn.querySelector('.spinner-border');
+                        if(icon) icon.classList.add('d-none');
+                        if(spinner) spinner.classList.remove('d-none');
+                        submitBtn.disabled = true;
+                    }
+
+                    fetch('/api/ai-search', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: JSON.stringify({ query: text })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if(data.redirect_url) {
+                            window.location.href = data.redirect_url;
+                        } else {
+                            form.submit(); // fallback
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        form.submit(); // fallback
+                    });
+                }
+            });
+        });
     </script>
 
     @stack('scripts')

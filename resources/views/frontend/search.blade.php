@@ -7,7 +7,7 @@
 {{-- FILTER BAR --}}
 <div class="filter-bar">
     <div class="container">
-        <form action="{{ route('items.search') }}" method="GET">
+        <form action="{{ route('items.search') }}" method="GET" id="mainSearchFormPage">
             <div class="row g-2 align-items-end hero-search-form" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 20px; border: 1px solid rgba(255,255,255,0.05)">
                 <div class="col-lg-4 col-md-6 search-input-group">
                     <div class="w-100">

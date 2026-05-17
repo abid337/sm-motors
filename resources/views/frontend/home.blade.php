@@ -13,12 +13,12 @@
         <div class="row justify-content-center">
             <div class="col-lg-9 col-xl-8">
                 <div class="hero-search-wrapper">
-                    <form action="{{ route('items.search') }}" method="GET" class="hero-search-form">
+                    <form action="{{ route('items.search') }}" method="GET" class="hero-search-form" id="mainSearchForm">
                         <div class="search-input-group">
-                            <input type="text" name="keyword" class="search-input" placeholder="Car Make or Model" />
+                            <input type="text" name="keyword" id="searchKeyword" class="search-input" placeholder="Car Make or Model (or ask AI...)" />
                         </div>
                         <div class="search-input-group">
-                            <select name="city_id" class="search-select">
+                            <select name="city_id" id="searchCity" class="search-select">
                                 <option value="">All Cities</option>
                                 @foreach($cities as $city)
                                 <option value="{{ $city->id }}">{{ $city->name }}</option>
@@ -26,7 +26,7 @@
                             </select>
                         </div>
                         <div class="search-input-group">
-                            <select name="price_range" class="search-select">
+                            <select name="price_range" id="searchPrice" class="search-select">
                                 <option value="">All Prices</option>
                                 <option value="0-500000">Under 5 Lac</option>
                                 <option value="500000-1500000">5 - 15 Lac</option>
@@ -35,8 +35,9 @@
                                 <option value="6000000-999999999">Above 60 Lac</option>
                             </select>
                         </div>
-                        <button class="search-submit-btn" type="submit">
-                            <i class="fas fa-search"></i>
+                        <button class="search-submit-btn" type="submit" id="searchSubmitBtn">
+                            <i class="fas fa-search" id="searchIcon"></i>
+                            <div class="spinner-border spinner-border-sm text-white d-none" id="searchSpinner" role="status"></div>
                         </button>
                     </form>
                 </div>

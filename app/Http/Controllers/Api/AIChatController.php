@@ -24,6 +24,7 @@ class AIChatController extends Controller
         $request->validate([
             'message' => 'required|string|max:1000',
         ]);
+        
 
         $result = $this->chatService->getReply($request->message);
 

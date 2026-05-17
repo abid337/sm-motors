@@ -15,7 +15,6 @@ use App\Http\Controllers\Admin\PropertyTemplateController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\UserItemController;
-use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Api\AIChatController;
 
 // ─────────────────────────────
@@ -117,7 +116,6 @@ Route::prefix('admin')
         Route::put('settings', [SettingsController::class, 'update'])->name('settings.update');
     });
 
-    // OpenRouterAPI Key route 
-    // Advanced AI Chat Routes
-    Route::post('/chat', [AIChatController::class, 'message'])->name('chat.message');
-    Route::post('/chat/reset', [AIChatController::class, 'reset'])->name('chat.reset');
+// AI Chat Routes
+Route::post('/chat', [AIChatController::class, 'message'])->name('chat.message');
+Route::post('/chat/reset', [AIChatController::class, 'reset'])->name('chat.reset');
