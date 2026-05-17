@@ -35,7 +35,13 @@ class ItemController extends Controller
         // Category Filter
         if ($request->category) {
             $query->whereHas('category', function ($q) use ($request) {
-                $q->where('slug', $request->category);
+                if ($request->category == 'cars') {
+                    $q->whereIn('slug', ['new-cars', 'used-cars']);
+                } elseif ($request->category == 'bikes') {
+                    $q->whereIn('slug', ['new-bikes', 'used-bikes']);
+                } else {
+                    $q->where('slug', $request->category);
+                }
             });
         }
 

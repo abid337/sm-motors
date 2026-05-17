@@ -41,6 +41,7 @@ class AISearchController extends Controller
             'keyword' => !empty($filters['keyword']) ? $filters['keyword'] : $request->input('query'),
             'city_id' => !empty($filters['city_id']) ? $filters['city_id'] : $request->input('city_id'),
             'price_range' => !empty($filters['price_range']) ? $filters['price_range'] : $request->input('price_range'),
+            'category' => !empty($filters['category']) ? $filters['category'] : null,
         ];
 
         // Filter out nulls and empty strings
