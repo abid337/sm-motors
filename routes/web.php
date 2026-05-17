@@ -119,3 +119,6 @@ Route::prefix('admin')
 // AI Chat Routes
 Route::post('/chat', [AIChatController::class, 'message'])->name('chat.message');
 Route::post('/chat/reset', [AIChatController::class, 'reset'])->name('chat.reset');
+
+// AI Search Route
+Route::post('/api/ai-search', [\App\Http\Controllers\Api\AISearchController::class, 'extractQuery'])->name('ai.search');
