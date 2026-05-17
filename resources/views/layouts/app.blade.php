@@ -413,28 +413,22 @@
         }, 3000);
 
         // Intercept Search Forms for AI Processing
-        document.querySelectorAll('.hero-search-form').forEach(form => {
+        function bindAiSearchForm(formId, inputId, btnId, spinnerId, textId) {
+            const form = document.getElementById(formId);
+            if (!form) return;
             form.addEventListener('submit', function(e) {
-                const keywordInput = this.querySelector('input[name="keyword"]');
-                const text = keywordInput ? keywordInput.value.trim() : '';
-                const words = text.split(' ').filter(w => w.length > 0);
+                e.preventDefault();
+                const inputEl = document.getElementById(inputId);
+                const text = inputEl ? inputEl.value.trim() : '';
                 
-                // If it looks like a natural language query
-                const isNaturalLanguage = words.length >= 3 || text.toLowerCase().includes(' in ') || text.toLowerCase().includes(' under ') || text.toLowerCase().includes(' for ');
-                
-                if (isNaturalLanguage && text.length > 0) {
-                    e.preventDefault();
-                    const submitBtn = this.querySelector('.search-submit-btn');
-                    let icon = null;
-                    let spinner = null;
+                if (text.length > 0) {
+                    const btn = document.getElementById(btnId);
+                    const spinner = document.getElementById(spinnerId);
+                    const btnText = document.getElementById(textId);
                     
-                    if (submitBtn) {
-                        icon = submitBtn.querySelector('i');
-                        spinner = submitBtn.querySelector('.spinner-border');
-                        if(icon) icon.classList.add('d-none');
-                        if(spinner) spinner.classList.remove('d-none');
-                        submitBtn.disabled = true;
-                    }
+                    if (btnText) btnText.style.display = 'none';
+                    if (spinner) spinner.classList.remove('d-none');
+                    if (btn) btn.disabled = true;
 
                     fetch('/api/ai-search', {
                         method: 'POST',
@@ -449,16 +443,26 @@
                         if(data.redirect_url) {
                             window.location.href = data.redirect_url;
                         } else {
-                            form.submit(); // fallback
+                            alert('Could not understand query. Try again.');
+                            if (btnText) btnText.style.display = 'inline';
+                            if (spinner) spinner.classList.add('d-none');
+                            if (btn) btn.disabled = false;
                         }
                     })
                     .catch(err => {
                         console.error(err);
-                        form.submit(); // fallback
+                        alert('Network error. Try again.');
+                        if (btnText) btnText.style.display = 'inline';
+                        if (spinner) spinner.classList.add('d-none');
+                        if (btn) btn.disabled = false;
                     });
                 }
             });
-        });
+        }
+
+        bindAiSearchForm('aiSearchForm', 'aiSearchInput', 'aiSearchBtn', 'aiSearchSpinner', 'aiSearchText');
+        bindAiSearchForm('aiSearchFormPage', 'aiSearchInputPage', 'aiSearchBtnPage', 'aiSearchSpinnerPage', 'aiSearchTextPage');
+
     </script>
 
     @stack('scripts')

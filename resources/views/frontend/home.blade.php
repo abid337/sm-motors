@@ -13,6 +13,20 @@
         <div class="row justify-content-center">
             <div class="col-lg-9 col-xl-8">
                 <div class="hero-search-wrapper">
+                    <!-- AI Search Form -->
+                    <form id="aiSearchForm" class="mb-4" style="background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 100px; padding: 5px; display: flex; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);">
+                        <div style="flex: 1; display: flex; align-items: center; padding-left: 20px;">
+                            <i class="fas fa-robot text-danger fs-5 me-2"></i>
+                            <input type="text" id="aiSearchInput" class="search-input" placeholder="Ask AI: e.g. Honda Civic in Lahore under 50 lacs" style="text-align: left; padding: 0 10px; width: 100%; outline: none;" />
+                        </div>
+                        <button class="search-submit-btn" type="submit" id="aiSearchBtn" style="border-radius: 50px; padding: 0 25px; display: flex; align-items: center; gap: 8px;">
+                            <span id="aiSearchText">Ask AI</span>
+                            <div class="spinner-border spinner-border-sm text-white d-none" id="aiSearchSpinner" role="status"></div>
+                        </button>
+                    </form>
+
+                    <div class="text-white opacity-50 mb-4 small fw-bold tracking-widest">- OR MANUAL SEARCH -</div>
+
                     <form action="{{ route('items.search') }}" method="GET" class="hero-search-form" id="mainSearchForm">
                         <div class="search-input-group">
                             <input type="text" name="keyword" id="searchKeyword" class="search-input" placeholder="Car Make or Model (or ask AI...)" />

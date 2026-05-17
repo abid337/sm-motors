@@ -7,6 +7,22 @@
 {{-- FILTER BAR --}}
 <div class="filter-bar">
     <div class="container">
+        <!-- AI SMART SEARCH -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-10">
+                <form id="aiSearchFormPage" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.1); display: flex; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                    <div style="flex: 1; display: flex; align-items: center; padding-left: 10px;">
+                        <i class="fas fa-robot text-danger fs-5 me-2"></i>
+                        <input type="text" id="aiSearchInputPage" class="search-input" placeholder="Ask AI: e.g. Alto in Karachi under 20 lacs" style="text-align: left; padding: 0 10px; border: none !important; background: transparent !important; color: white !important; width: 100%; outline: none;" />
+                    </div>
+                    <button class="btn btn-danger" type="submit" id="aiSearchBtnPage" style="border-radius: 8px; padding: 0 20px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                        <span id="aiSearchTextPage">Ask AI</span>
+                        <div class="spinner-border spinner-border-sm text-white d-none" id="aiSearchSpinnerPage" role="status"></div>
+                    </button>
+                </form>
+            </div>
+        </div>
+
         <form action="{{ route('items.search') }}" method="GET" id="mainSearchFormPage">
             <div class="row g-2 align-items-end hero-search-form" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 20px; border: 1px solid rgba(255,255,255,0.05)">
                 <div class="col-lg-4 col-md-6 search-input-group">
