@@ -16,9 +16,12 @@ class ItemController extends Controller
         $query = Item::with('category', 'city')
             ->where('status', 'published');
 
-        // Keyword Search
+        // Keyword Search (Title aur Description dono mein check karein)
         if ($request->keyword) {
-            $query->where('title', 'like', '%' . $request->keyword . '%');
+            $query->where(function($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->keyword . '%')
+                  ->orWhere('description', 'like', '%' . $request->keyword . '%');
+            });
         }
 
         // City Filter

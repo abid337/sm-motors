@@ -429,14 +429,23 @@
                 const priceRange = priceInput ? priceInput.value : '';
                 
                 const submitBtn = form.querySelector('.search-submit-btn');
-                const btnText = submitBtn ? submitBtn.querySelector('span') : null;
-                const spinner = submitBtn ? submitBtn.querySelector('.spinner-border') : null;
-                const icon = submitBtn ? submitBtn.querySelector('i') : null;
-                
-                if (btnText) btnText.style.display = 'none';
-                if (icon) icon.classList.add('d-none');
-                if (spinner) spinner.classList.remove('d-none');
                 if (submitBtn) submitBtn.disabled = true;
+
+                // Replace the form's parent container with the custom loading screen
+                const container = form.closest('.hero-search-wrapper') || form.closest('.container') || form.parentElement;
+                
+                // Save original height to prevent layout jump
+                const originalHeight = container.offsetHeight;
+                
+                container.innerHTML = `
+                    <div class="col-12 text-center my-4 py-4 text-white" style="font-family: sans-serif; min-height: ${originalHeight}px; display: flex; flex-direction: column; justify-content: center;">
+                        <h4 class="mb-3 fw-bold">🧠 SM-Autos AI is analyzing your query...</h4>
+                        <div class="progress" style="height: 4px; background-color: rgba(255,255,255,0.1); max-width: 400px; margin: 0 auto; border-radius: 4px;">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width: 100%; border-radius: 4px;"></div>
+                        </div>
+                        <p class="text-white-50 mt-3 small">Extracting entities & filtering database...</p>
+                    </div>
+                `;
 
                 fetch('/api/ai-search', {
                     method: 'POST',
