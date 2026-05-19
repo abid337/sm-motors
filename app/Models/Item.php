@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use App\DTOs\AISearchCriteria;
 
 class Item extends Model
 {
@@ -64,5 +66,40 @@ class Item extends Model
     public function incrementViews()
     {
         $this->increment('views');
+    }
+
+    // Apply AI Search Criteria Scope
+    public function scopeApplyAISearch(Builder $query, AISearchCriteria $criteria): Builder
+    {
+        return $query->when($criteria->category, function ($q, $category) {
+                if ($category == 'cars') {
+                    $q->whereHas('category', function ($subQ) {
+                        $subQ->whereIn('slug', ['new-cars', 'used-cars']);
+                    });
+                } elseif ($category == 'bikes') {
+                    $q->whereHas('category', function ($subQ) {
+                        $subQ->whereIn('slug', ['new-bikes', 'used-bikes']);
+                    });
+                } else {
+                    $q->whereHas('category', function ($subQ) use ($category) {
+                        $subQ->where('slug', $category);
+                    });
+                }
+            })
+            ->when($criteria->cityId, function ($q, $cityId) {
+                $q->where('city_id', $cityId);
+            })
+            ->when($criteria->minPrice, function ($q, $minPrice) {
+                $q->where('price', '>=', $minPrice);
+            })
+            ->when($criteria->maxPrice, function ($q, $maxPrice) {
+                $q->where('price', '<=', $maxPrice);
+            })
+            ->when($criteria->keyword, function ($q, $keyword) {
+                $q->where(function ($subQuery) use ($keyword) {
+                    $subQuery->where('title', 'like', "%{$keyword}%")
+                             ->orWhere('description', 'like', "%{$keyword}%");
+                });
+            });
     }
 }

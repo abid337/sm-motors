@@ -7,48 +7,20 @@ use App\Models\Item;
 use App\Models\City;
 use App\Models\Category;
 use App\Models\Inquiry;
+use App\DTOs\AISearchCriteria;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
     public function search(Request $request)
     {
-        $query = Item::with('category', 'city')
-            ->where('status', 'published');
+        $criteria = AISearchCriteria::fromRequest($request);
 
-        // Keyword Search (Title aur Description dono mein check karein)
-        if ($request->keyword) {
-            $query->where(function($q) use ($request) {
-                $q->where('title', 'like', '%' . $request->keyword . '%')
-                  ->orWhere('description', 'like', '%' . $request->keyword . '%');
-            });
-        }
-
-        // City Filter
-        if ($request->city_id) {
-            $query->where('city_id', $request->city_id);
-        }
-
-        // Price Filter
-        if ($request->price_range) {
-            [$min, $max] = explode('-', $request->price_range);
-            $query->whereBetween('price', [(int)$min, (int)$max]);
-        }
-
-        // Category Filter
-        if ($request->category) {
-            $query->whereHas('category', function ($q) use ($request) {
-                if ($request->category == 'cars') {
-                    $q->whereIn('slug', ['new-cars', 'used-cars']);
-                } elseif ($request->category == 'bikes') {
-                    $q->whereIn('slug', ['new-bikes', 'used-bikes']);
-                } else {
-                    $q->where('slug', $request->category);
-                }
-            });
-        }
-
-        $items      = $query->latest()->paginate(12);
+        $items = Item::with('category', 'city')
+            ->where('status', 'published')
+            ->applyAISearch($criteria)
+            ->latest()
+            ->paginate(12);
         $cities     = City::all();
         $categories = Category::all();
 
